@@ -1,6 +1,6 @@
 # ImageMosaic
 
-Manipulate images utilizing power of Python. The commands of ImageMosaic was moved from opencvtool. 
+Manipulate images utilizing power of Python. The commands of ImageMosaic were moved from opencvtool. 
 
 This is called by [gem package -- vstool](http://devel.misasa.okayama-u.ac.jp/gitlab/gems/vstool/tree/master) and [gem package -- opencvtool](http://devel.misasa.okayama-u.ac.jp/gitlab/gems/opencvtool/tree/master).
 
