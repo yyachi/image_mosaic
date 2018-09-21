@@ -9,12 +9,6 @@ See [gem package -- opencvtool](https://babel.misasa.okayama-u.ac.jp/gems/opencv
 
 # Dependency
 
-## [pip](https://pip.pypa.io/en/latest/installing.html "download and DOS> python get-pip.py")
-
-## [PyYAML](http://pyyaml.org/wiki/PyYAML "download and launch installer")
-
-## [numpy](http://sourceforge.net/projects/numpy/files/NumPy/ "download and launch installer")
-
 ## [opencv](http://opencv.org/downloads.html "download and DOS> copy C:\opencv\build\python\2.7\x86\cv2.pyd C:\Python27\Lib\site-packages")
 
 
