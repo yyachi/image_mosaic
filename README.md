@@ -1,8 +1,10 @@
 # ImageMosaic
+A series of image utilities.  Use ImageMosaic to crop, rotate, or
+enlarge bitmap images.  This package was developed as Note
+"python package -- opencvtool" until 2018-08.
 
-Manipulate images utilizing power of Python. The commands of ImageMosaic were moved from opencvtool. 
-
-This is called by [gem package -- vstool](http://devel.misasa.okayama-u.ac.jp/gitlab/gems/vstool/tree/master) and [gem package -- opencvtool](http://devel.misasa.okayama-u.ac.jp/gitlab/gems/opencvtool/tree/master).
+See [gem package -- vstool](https://babel.misasa.okayama-u.ac.jp/gems/vstool/tree/master) that refers to this package.
+See [gem package -- opencvtool](https://babel.misasa.okayama-u.ac.jp/gems/opencvtool/tree/master) that refers to this package.
 
 
 # Dependency
