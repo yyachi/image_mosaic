@@ -25,9 +25,11 @@ Install it as Administrator as:
 
     ADMIN.CMD> pip install git+https://github.com/misasa/image_mosaic.git
 
+    $ cd ~/Downloads/
+    $ wget https://github.com/misasa/image_mosaic/archive/master.zip
+    ADMIN.CMD> cd %USERPROFILE%\Downloads\
     ADMIN.CMD> pip list
     ADMIN.CMD> pip uninstall opencvtool
-    $ wget https://github.com/misasa/image_mosaic/archive/master.zip
     ADMIN.CMD> pip install master.zip
 
 Successful installation is confirmed by:
