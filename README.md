@@ -11,7 +11,7 @@ See [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/openc
 
 # Dependency
 
-## [opencv](http://opencv.org/downloads.html "download and DOS> copy C:\opencv\build\python\2.7\x86\cv2.pyd C:\Python27\Lib\site-packages")
+## [opencv](http://opencv.org/downloads.html "download and CMD> copy C:\opencv\build\python\2.7\x86\cv2.pyd C:\Python27\Lib\site-packages")
 
 
 # Installation
