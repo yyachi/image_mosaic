@@ -16,8 +16,8 @@ Download OpenCV 2.4 for MS Windows and copy Python library file to local Python 
 
     $ cd ~/Downlaods/
     $ wget https://sourceforge.net/projects/opencvlibrary/files/opencv-win/2.4.13/opencv-2.4.13.6-vc14.exe/download
-    CMD> cd %USERPROFILE%\Downloads
-    CMD> copy opencv\build\python\2.7\x64\cv2.pyd C:\Python27\Lib\site-packages
+    CMD> cd %USERPROFILE%\Downloads\
+    CMD> copy opencv\build\python\2.7\x64\cv2.pyd C:\Python27\Lib\site-packages\
 
 # Installation
 
