@@ -8,11 +8,16 @@ until 2018-08.
 See [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool/tree/master) that refers to this package.
 See [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool/tree/master) that refers to this package.
 
-
 # Dependency
 
-## [opencv](https://opencv.org/releases.html "download and CMD> copy C:\opencv\build\python\2.7\x86\cv2.pyd C:\Python27\Lib\site-packages")
+Download OpenCV 2.4 for MS Windows and copy Python library file to local Python directory.
 
+## [opencv](https://opencv.org/releases.html "download, uncompress, and copy cv2.pyd to C:\Python27\Lib\site-packages")
+
+    $ cd ~/Downlaods/
+    $ wget https://sourceforge.net/projects/opencvlibrary/files/opencv-win/2.4.13/opencv-2.4.13.6-vc14.exe/download
+    CMD> cd %USERPROFILE%\Downloads
+    CMD> copy opencv\build\python\2.7\x64\cv2.pyd C:\Python27\Lib\site-packages
 
 # Installation
 
