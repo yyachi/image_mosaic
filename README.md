@@ -27,7 +27,7 @@ Install it as Administrator as:
 
 Successful installation is confirmed by:
 
-    CMD> blend-image --help
+    CMD> image-warp --help
 
 # Commands
 
