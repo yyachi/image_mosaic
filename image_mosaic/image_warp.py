@@ -541,34 +541,33 @@ def main():
 	parser = OptionParser("""usage: %prog [options] imagefile
 
 SYNOPSIS AND USAGE
-  python %prog [options] imagefile.jpg
+  python %prog [options] image.jpg
 
 DESCRIPTION
-  Transform imagefile based on Affine matrix stored in imageometry
-  file.  Note %prog assumes existence of image-info yamlfile for
-  imagefile (= imageometry).  This requires image libraries and very
-  likey you have to inovke this from CMD prompt on MS Windows.  When
-  imagefile is `imagefile.jpg', imageometry file should be
-  `imagefile.geo'.  This will crop the imagefile (option), transform
-  the imagefile using `imagefile.geo', and create `imagefile_.jpg' and
-  `imagefile_.geo'.
+  Transform an image based on Affine matrix stored in imageometry
+  file.  Note %prog assumes existence of image-info yamlfile for image
+  (= imageometry).  When name of an image is `image.jpg', name of the
+  imageometry file should be `image.geo'.  This will crop the image
+  (option), transform the image using `image.geo', and create
+  `image_.jpg' and `image_.geo'.
 
   Note that you have to prepare imageometry file in advance.  Consider
-  using `image-get-affine' and `image-warp-clicks'.
+  using `vs_attach_image.m', or combination of `image-get-affine' and
+  `image-warp-clicks'.
 
 EXAMPLE
-  DOS> dir
-  imagefile.jpg  imagefile.geo
-  DOS> image-warp imagefile.jpg -r -50 50 -38.45 38.45 -d 10.24
-  ... |imagefile_.jpg| and |imagefile_.geo| were created
-  DOS> dir
-  imagefile.jpg  imagefile.geo  imagefile_.jpg imagefile_.geo
+  CMD> dir
+  image.jpg  image.geo
+  CMD> image-warp image.jpg -r -50 50 -38.45 38.45 -d 10.24
+  ... |image_.jpg| and |image_.geo| were created
+  CMD> dir
+  image.jpg  image.geo  image_.jpg image_.geo
 
 SEE ALSO
+  vs_attach_image.m
   image-get-affine (renamed from vs-calc-affine.py)
   image-warp-clicks
-  blend-image
-  http://dream.misasa.okayama-u.ac.jp
+  https://github.com/misasa/image_mosaic
 
 IMPLEMENTATION
   Orochi, version 9
