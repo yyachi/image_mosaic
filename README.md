@@ -7,6 +7,7 @@ until 2018-08.
 
 See [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool/tree/master) that refers to this package.
 See [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool/tree/master) that refers to this package.
+See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage).
 
 # Dependency
 
