@@ -25,6 +25,8 @@ Install it as Administrator as:
 
     ADMIN.CMD> pip install git+https://github.com/misasa/image_mosaic.git
 
+or as:
+
     $ cd ~/Downloads/
     $ wget https://github.com/misasa/image_mosaic/archive/master.zip
     ADMIN.CMD> cd %USERPROFILE%\Downloads\
