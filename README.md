@@ -10,7 +10,7 @@ See [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/openc
 
 # Dependency
 
-Download OpenCV 2.4 for MS Windows and copy Python library file to local Python directory.
+Download OpenCV 2.4 for MS Windows and copy a Python library file to local Python directory.
 
 ## [opencv](https://opencv.org/releases.html "download, uncompress, and copy cv2.pyd to C:\Python27\Lib\site-packages")
 
