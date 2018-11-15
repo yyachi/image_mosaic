@@ -5,8 +5,9 @@ enlarge bitmap images.  This package was developed as [python package
 -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/pythonpackage/opencvtool)
 until 2018-08.
 
-See [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool/tree/master) that refers to this package.
-See [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool/tree/master) that refers to this package.
+See [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool) that refers to this package.
+See [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool) that refers to this package.
+See [Rails project -- medusa](https://github.com/misasa/medusa) that refers to this package.
 See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage).
 
 # Dependency
@@ -43,22 +44,22 @@ Successful installation is confirmed by:
 
 Commands are summarized as:
 
-| command             | description                                                               | note |
-| ------------------- | ------------------------------------------------------------------------- | ---- |
-| affine_from_points  | No description available                                                  |      |
-| blend-image         | Blend two images using alpha blend techniques                             |      |
-| crop_image          | No description available                                                  |      |
-| h_from_points       | No description available                                                  |      |
-| haffine_from_params | No description available                                                  |      |
-| haffine_from_points | No description available                                                  |      |
-| image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy                      |      |
-| image-warp-clicks   | Transform imagefile by matching three coordinates                         |      |
-| image-warp          | Transform imagefile based on Affine matrix stored in imageometry file.    |      |
-| image_in_image      | No description available                                                  |      |
-| make_tiles          | No description available                                                  |      |
-| transform_image     | No description available                                                  |      |
-| transform_points    | No description available                                                  |      |
-| warp_image          | Transform an image based on parameters of angle, magnification, and shift |      |
+| command             | description                                                                            | note |
+| ------------------- | -------------------------------------------------------------------------------------- | ---- |
+| affine_from_points  | No description available                                                               |      |
+| blend-image         | Blend two images using alpha blend techniques                                          |      |
+| crop_image          | No description available                                                               |      |
+| h_from_points       | No description available                                                               |      |
+| haffine_from_params | No description available                                                               |      |
+| haffine_from_points | No description available                                                               |      |
+| image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
+| image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
+| image-warp          | Transform imagefile based on Affine matrix stored in imageometry file.                 |      |
+| image_in_image      | No description available                                                               |      |
+| make_tiles          | No description available                                                               |      |
+| transform_image     | No description available                                                               |      |
+| transform_points    | No description available                                                               |      |
+| warp_image          | Transform an image based on parameters of angle, magnification, and shift.             |      |
 
 
 # Usage

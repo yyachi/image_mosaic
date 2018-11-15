@@ -261,10 +261,6 @@ def is_answer_yes(prompt = "answer yes/no", default = True):
 	else:
 		return default
 
-
-
-
-
 def points_to_list(points):
 	l = [[],[],[]]
 	for point in points:
@@ -280,8 +276,6 @@ def list_to_points(l):
 		points.append(point)
 	return points
 
-
-
 def main():
         parser = OptionParser("""usage: %prog [options] image
 
@@ -296,9 +290,9 @@ DESCRIPTION
   program from CMD prompt on MS Windows.
 
 EXAMPLE
-  DOS> dir
+  CMD> dir
   raman.jpg  raman.geo
-  DOS> type raman.geo
+  CMD> type raman.geo
   anchors:
   - [X1 X2 X3]
   - [Y1 Y2 Y3]
@@ -307,7 +301,7 @@ EXAMPLE
   - [x1 x2 x3]
   - [y1 y2 y3]
   - [1  1  1 ]
-  DOS> python C:/Users/ims/xtreeml/imgtools/bin/vs-calc-affine.py raman.jpg
+  CMD> python C:/Users/ims/xtreeml/imgtools/bin/vs-calc-affine.py raman.jpg
   ... <affine_xy2vs> and <affine_ij2vs> inserted in |raman.geo|
 
 SEE ALSO

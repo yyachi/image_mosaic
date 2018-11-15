@@ -9,7 +9,6 @@ import cv2
 from optparse import OptionParser
 #from opencv_util import *
 
-
 def main():
 	usage = textwrap.dedent('''\
  %prog image1 image2 corner_of_image1_on_image2([upper_left,upper_right,lower_right,lower_left])
