@@ -54,13 +54,12 @@ Commands are summarized as:
 | haffine_from_points | No description available                                                               |      |
 | image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
-| image-warp          | Transform imagefile based on Affine matrix stored in imageometry file.                 |      |
+| image-warp          | Rotate, magnify, and distort an image based on Affine matrix in imageometry file.      |      |
 | image_in_image      | No description available                                                               |      |
 | make_tiles          | No description available                                                               |      |
 | transform_image     | No description available                                                               |      |
 | transform_points    | No description available                                                               |      |
-| warp_image          | Transform an image based on parameters of angle, magnification, and shift.             |      |
-
+| warp_image          | Rotate and magnify an image.  Specify parameters as arguments.                         |      |
 
 # Usage
 
