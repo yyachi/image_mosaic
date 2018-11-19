@@ -59,7 +59,7 @@ Commands are summarized as:
 | make_tiles          | No description available                                                               |      |
 | transform_image     | No description available                                                               |      |
 | transform_points    | No description available                                                               |      |
-| warp_image          | Create an image file after rotation and magnifycation. Specify parameters as arguments.                         |      |
+| warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the parameters as arguments.                         |      |
 
 # Usage
 
