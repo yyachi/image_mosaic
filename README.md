@@ -12,7 +12,7 @@ See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okay
 
 # Dependency
 
-## [opencv](https://opencv.org/releases.html)
+## [OpenCV 2.4](https://opencv.org/releases.html)
 
 Download OpenCV 2.4 for MS Windows, uncompress the archive, and copy a Python library file `CV2.pyd` to local Python directory such for `C:\Python27\Lib\site-packages`.
 
