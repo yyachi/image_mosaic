@@ -47,12 +47,12 @@ Commands are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| affine_from_points  | Calculates an affine transform from three pairs of the corresponding points.           |      |
+| affine_from_points  | Calculates an affine transform from three pairs of the corresponding points.  The three pairs of the corrensponding points are read from stdard input.           |      |
 | blend-image         | Blend two images using alpha blend techniques                                          |      |
 | crop_image          | No description available                                                               |      |
 | h_from_points       | No description available                                                               |      |
 | haffine_from_params | No description available                                                               |      |
-| haffine_from_points | No description available                                                               |      |
+| haffine_from_points | Calculates an affine transform from three pairs of the corresponding points.  Specify the points as arguments.|      |
 | image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
 | image-warp          | Create an image file after rotation, magnification, and distortion based on Affine matrix in imageometry file.      |      |
