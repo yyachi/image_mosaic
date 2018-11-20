@@ -47,15 +47,15 @@ Commands are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| affine_from_points  | Calculates an affine transform from three pairs of the corresponding points. The three pairs of the corrensponding points are read from standard input.           |      |
-| blend-image         | Blend two images using alpha blend techniques                                          |      |
+| affine_from_points  | Calculates an affine transform from three pairs of the corresponding points. The three pairs of the corrensponding points are read from standard input.           |  interactive-command    |
+| blend-image         | Blend two images using alpha blend techniques                                          | user-interactive-command     |
 | crop_image          | Cut out a rectangular region of an image.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool),  [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 | h_from_points       | Calculates a perspective transform from four pairs of the corresponding points.   Specify the points as arguments.|      [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 | haffine_from_params | Calculates an affine matrix of 2D rotation. Specify the center of the rotation in the source image, rotation angle and Isotropic scale factor as arguments.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)|
 | haffine_from_points | Calculates an affine transform from three pairs of the corresponding points. Specify the points as arguments.|      |
-| image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
-| image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
-| image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.     |      |
+| image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. | interactive-command     |
+| image-warp-clicks   | Transform imagefile by matching three coordinates                                      | interactive-command     |
+| image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.     | interactive-command     |
 | image_in_image      | Put an image file in a wallpaper image with an affine transformation.|[rails project -- medusa](https://github.com/misasa/medusa)|
 | make_tiles          | Create map tiles to use with Leaflet.js.                   |[rails project -- medusa](https://github.com/misasa/medusa)|
 | transform_image     | Applies an affine transformation to an image.                                                               |      |
