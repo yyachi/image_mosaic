@@ -406,7 +406,7 @@ HISTORY
 
 	f = open(default_yfile_path, 'w')
 	yaml.dump({ 'anchors': points_to_list(anchors_on_stage), 'anchors_xy': points_to_list(anchors_on_image_coord), 'anchors_ij': points_to_list(anchors_on_image), 'affine_xy2vs': affine_to_list(affine_for_output), 'affine_ij2vs': affine_to_list(affine_image2stage) }, f, encoding='utf8', allow_unicode=True)
-	print "%s %dx%d pix was calibrated. It's affine matrix to stage was %s." % (os.path.basename(image_path), original_width, original_height, affine_to_str(affine_for_output))
+	print "%s %dx%d pix was calibrated. Its affine matrix to stage was %s." % (os.path.basename(image_path), original_width, original_height, affine_to_str(affine_for_output))
 
 
 if __name__ == "__main__":
