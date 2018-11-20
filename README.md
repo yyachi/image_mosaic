@@ -56,7 +56,7 @@ Commands are summarized as:
 | image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
 | image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.     |      |
-| image_in_image      | Put an image file in an wallpaper image with an affine transformation.|      |
+| image_in_image      | Put an image file in an wallpaper image with an affine transformation.|[Rails project -- medusa](https://github.com/misasa/medusa)|
 | make_tiles          | Create map tiles to use with Leaflet.js.                   |      |
 | transform_image     | Applies an affine transformation to an image.                                                               |      |
 | transform_points    | Applies an affine transformation to points.                                                            |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool)|
