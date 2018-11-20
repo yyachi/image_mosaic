@@ -57,7 +57,7 @@ Commands are summarized as:
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
 | image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.     |      |
 | image_in_image      | Put an image file in an wallpaper image with an affine transformation.|      |
-| make_tiles          | No description available                                                               |      |
+| make_tiles          | create map tiles to use with Leaflet.js.                   |      |
 | transform_image     | Applies an affine transformation to an image.                                                               |      |
 | transform_points    | Applies an affine transformation to points.                                                            |      |
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |      |
