@@ -544,16 +544,22 @@ SYNOPSIS AND USAGE
   python %prog [options] image.jpg
 
 DESCRIPTION
-  Transform an image based on Affine matrix stored in imageometry
-  file.  Note %prog assumes existence of image-info yamlfile for image
-  (= imageometry).  When name of an image is `image.jpg', name of the
-  imageometry file should be `image.geo'.  This will crop the image
-  (option), transform the image using `image.geo', and create
-  `image_.jpg' and `image_.geo'.
+  Create an image file after rotation, magnification, and distortion
+  and impose the image into a canvas based on Affine matrix stored in
+  imageometry file.
 
-  Note that you have to prepare imageometry file in advance.  Consider
-  using `vs_attach_image.m', or combination of `image-get-affine' and
-  `image-warp-clicks'.
+  Note %prog assumes existence of image-info yamlfile for image (=
+  imageometry).  When name of an image is `image.jpg', name of the
+  imageometry file should be `image.geo'.  Prepare imageometry file in
+  advance.  Consider using `vs_attach_image.m', or combination of
+  `image-get-affine' and `image-warp-clicks'.
+
+  The image is transformed and imposed to VS space using `image.geo'
+  then sub-area of the VS space is exported as `image_.jpg' with
+  `image_.geo'.  We refer the image as image-of-VS.  The area of
+  image-of-VS to be exported from VS space is specified by option
+  `--range'.  Without the option, minimum area that just covers the
+  transformed image is exported.
 
 EXAMPLE
   CMD> dir
@@ -561,12 +567,13 @@ EXAMPLE
   CMD> image-warp image.jpg -r -50 50 -38.45 38.45 -d 10.24
   ... |image_.jpg| and |image_.geo| were created
   CMD> dir
-  image.jpg  image.geo  image_.jpg image_.geo
+  image.jpg  image.geo  image_.jpg  image_.geo
 
 SEE ALSO
   vs_attach_image.m
   image-get-affine (renamed from vs-calc-affine.py)
   image-warp-clicks
+  blend-image
   https://github.com/misasa/image_mosaic
 
 IMPLEMENTATION
@@ -580,11 +587,11 @@ HISTORY
 
 """)
 	parser.add_option("-o", "--out", type="string", dest="output_file_path",
-					  help="path of output-image", metavar="OUT_PATH")
+					  help="name of image-of-VS to be exported", metavar="OUT_PATH")
 	parser.add_option("-r", "--range", type="float", nargs=4, dest="stage_range",
-					  help="region to crop input-image in xy-on-image coordinate", metavar="X_MIN X_MAX Y_MIN Y_MAX")
+					  help="area of VS space to be exported as image-of-VS (in micron)", metavar="X_MIN X_MAX Y_MIN Y_MAX")
 	parser.add_option("-d", "--density", type="float", dest="pixels_per_um",
-					  help="resolution of output-image", metavar="PIXEL_PER_MICRON")
+					  help="resolution of image-of-VS after exported", metavar="PIXEL_PER_MICRON")
 	parser.add_option("-s", "--scale", dest="with_scale",
 					  action="store_true")
 	parser.add_option("-v", "--verbose",
