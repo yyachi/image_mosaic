@@ -58,8 +58,8 @@ Commands are summarized as:
 | image-warp          | Create an image file after rotation, magnification, and distortion based on Affine matrix in imageometry file.      |      |
 | image_in_image      | No description available                                                               |      |
 | make_tiles          | No description available                                                               |      |
-| transform_image     | No description available                                                               |      |
-| transform_points    | No description available                                                               |      |
+| transform_image     | Applies an affine transformation to an image.                                                               |      |
+| transform_points    | Applies an affine transformation to points.                                                            |      |
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |      |
 
 # Usage
