@@ -49,7 +49,7 @@ Commands are summarized as:
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
 | affine_from_points  | Calculates an affine transform from three pairs of the corresponding points. The three pairs of the corrensponding points are read from standard input.           |      |
 | blend-image         | Blend two images using alpha blend techniques                                          |      |
-| crop_image          | No description available                                                               |      |
+| crop_image          | Cut out a rectangular region of the image.|      |
 | h_from_points       | Calculates a perspective transform from four pairs of the corresponding points.   Specify the points as arguments.|      |
 | haffine_from_params | Calculates an affine matrix of 2D rotation. Specify the center of the rotation in the source image, rotation angle and Isotropic scale factor as arguments.|      |
 | haffine_from_points | Calculates an affine transform from three pairs of the corresponding points. Specify the points as arguments.|      |
