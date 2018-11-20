@@ -47,7 +47,7 @@ Commands are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| affine_from_points  | Calculates an affine transform from three pairs of the corresponding points.  The three pairs of the corrensponding points are read from stdard input.           |      |
+| affine_from_points  | Calculates an affine transform from three pairs of the corresponding points.  The three pairs of the corrensponding points are read from standard input.           |      |
 | blend-image         | Blend two images using alpha blend techniques                                          |      |
 | crop_image          | No description available                                                               |      |
 | h_from_points       | No description available                                                               |      |
