@@ -56,10 +56,10 @@ Commands are summarized as:
 | image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
 | image-warp          | Create an image file after rotation, magnification, and distortion based on Affine matrix in imageometry file.      |      |
-| image_in_image      | No description available                                                               |      |
+| image_in_image      | Put an image file in an wallpaper image with an affine transformation.|      |
 | make_tiles          | No description available                                                               |      |
-| transform_image     | No description available                                                               |      |
-| transform_points    | No description available                                                               |      |
+| transform_image     | Applies an affine transformation to an image.                                                               |      |
+| transform_points    | Applies an affine transformation to points.                                                            |      |
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |      |
 
 # Usage
