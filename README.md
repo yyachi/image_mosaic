@@ -49,8 +49,8 @@ Commands are summarized as:
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
 | affine_from_points  | Calculates an affine transform from three pairs of the corresponding points. The three pairs of the corrensponding points are read from standard input.           |      |
 | blend-image         | Blend two images using alpha blend techniques                                          |      |
-| crop_image          | Cut out a rectangular region of the image.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)      |
-| h_from_points       | Calculates a perspective transform from four pairs of the corresponding points.   Specify the points as arguments.|      [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)|
+| crop_image          | Cut out a rectangular region of the image.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool) [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool)      |
+| h_from_points       | Calculates a perspective transform from four pairs of the corresponding points.   Specify the points as arguments.|      [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool) [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool)|
 | haffine_from_params | Calculates an affine matrix of 2D rotation. Specify the center of the rotation in the source image, rotation angle and Isotropic scale factor as arguments.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)|
 | haffine_from_points | Calculates an affine transform from three pairs of the corresponding points. Specify the points as arguments.|      |
 | image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
@@ -59,8 +59,8 @@ Commands are summarized as:
 | image_in_image      | Put an image file in an wallpaper image with an affine transformation.|      |
 | make_tiles          | Create map tiles to use with Leaflet.js.                   |      |
 | transform_image     | Applies an affine transformation to an image.                                                               |      |
-| transform_points    | Applies an affine transformation to points.                                                            |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)|
-| warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)      |
+| transform_points    | Applies an affine transformation to points.                                                            |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool) [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool)|
+| warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool) [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool)|
 
 # Usage
 
