@@ -584,7 +584,6 @@ IMPLEMENTATION
 HISTORY
   March 28, 2018: Documentation modified
   May 27, 2015: TK adds documentation
-
 """)
 	parser.add_option("-o", "--out", type="string", dest="output_file_path",
 					  help="name of image-of-VS to be exported", metavar="OUT_PATH")
