@@ -55,7 +55,7 @@ Commands are summarized as:
 | haffine_from_points | Calculates an affine transform from three pairs of the corresponding points. Specify the points as arguments.|      |
 | image-get-affine    | Calculate affine_ij2vs, affine_xy2vs, and anchors_xy from anchors in imageometry file. |      |
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
-| image-warp          | Create an image file after rotation, magnification, and distortion based on Affine matrix in imageometry file.      |      |
+| image-warp          | Project image file into VS-space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.     |      |
 | image_in_image      | Put an image file in an wallpaper image with an affine transformation.|      |
 | make_tiles          | No description available                                                               |      |
 | transform_image     | Applies an affine transformation to an image.                                                               |      |
