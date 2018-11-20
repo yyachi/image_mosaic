@@ -57,7 +57,7 @@ Commands are summarized as:
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      |      |
 | image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.     |      |
 | image_in_image      | Put an image file in an wallpaper image with an affine transformation.|[Rails project -- medusa](https://github.com/misasa/medusa)|
-| make_tiles          | Create map tiles to use with Leaflet.js.                   |      |
+| make_tiles          | Create map tiles to use with Leaflet.js.                   |[Rails project -- medusa](https://github.com/misasa/medusa)|
 | transform_image     | Applies an affine transformation to an image.                                                               |      |
 | transform_points    | Applies an affine transformation to points.                                                            |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool)|
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool)|
