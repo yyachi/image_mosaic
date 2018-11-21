@@ -62,7 +62,7 @@ Commands to calculate an affine matrix of 2D rotation from parameters are summar
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| haffine_from_params | Parameters are the center of the rotation in the source image, rotation angle and Isotropic scale factor. Accepts parameters via command-line arguments.|Compatible with OpenCV3. Used in [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)|
+| haffine_from_params | Parameters are the center of the rotation in the source image, rotation angle and Isotropic scale factor. Accepts parameters via command-line arguments.|Compatible with OpenCV3. Used in [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool).|
 
 Commands to apply affine transform to an image or points are summarized as:
 
