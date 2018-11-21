@@ -64,7 +64,7 @@ Commands to transform image or points are summarized as:
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 | transform_points    | Applies an affine transformation to points.                                                            |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 
-Commands are summarized as:
+Other commands are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
