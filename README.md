@@ -53,7 +53,7 @@ Commands to calculate affine transform are summarized as:
 | haffine_from_params | Calculates an affine matrix of 2D rotation. Specify the center of the rotation in the source image, rotation angle and Isotropic scale factor as arguments.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)|
 | haffine_from_points | Calculates an affine transform from three pairs of the corresponding points. Specify the points as arguments.|      |
 
-Commands to transform image or points are summarized as:
+Commands to apply affine transform to an image or points are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
