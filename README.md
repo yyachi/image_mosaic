@@ -55,7 +55,7 @@ Commands to calculate an affine transform from three pairs of the corresponding 
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
 | haffine_from_points |The three pairs of the corrensponding points are specified as command-line arguments.|Compatible with OpenCV3.|
 | affine_from_points  |The three pairs of the corrensponding points are input via stdin.        |Compatible with OpenCV3.  interactive-command|
-| image-get-affine    |Calculates affine_xy2vs (also affine_ij2vs and anchors_xy) from anchors and anchors_ij in imageometry file. Accepts input via GUI for anchors_ij (src) and stdin for anchors (dst). | Not Compatible with OpenCV3. interactive-command|
+| image-get-affine    |Calculates affine_xy2vs (also affine_ij2vs and anchors_xy) from anchors and anchors_ij in imageometry file. Accepts anchors_ij via GUI and anchors via stdin. | Not Compatible with OpenCV3. interactive-command|
 
 
 Commands to calculate an affine matrix of 2D rotation are summarized as:
