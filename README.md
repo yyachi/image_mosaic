@@ -47,14 +47,14 @@ Commands to calculate a perspective transform from four pairs of the correspondi
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| h_from_points       | Calculates a perspective transform from four pairs of the corresponding points.   Specify the points as arguments.|      [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
+| h_from_points       |Specify the points as arguments.|      [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 
 Commands to calculate an affine transform from three pairs of the corresponding points are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| haffine_from_points | Calculates an affine transform from three pairs of the corresponding points. Specify the points as arguments.|compatible with OpenCV3, same as affine_from_points      |
-| affine_from_points  | Calculates an affine transform from three pairs of the corresponding points. The three pairs of the corrensponding points are read from standard input.           |  interactive-command, compatible with OpenCV3, same as haffine_from_points    |
+| haffine_from_points |Specify the points as arguments.|compatible with OpenCV3, same as affine_from_points      |
+| affine_from_points  |The three pairs of the corrensponding points are read from standard input.           |  interactive-command, compatible with OpenCV3, same as haffine_from_points    |
 | image-get-affine    | Calculate affine_xy2vs (also affine_ij2vs and anchors_xy) from anchors and anchors_ij in imageometry file. | interactive-command, not compatible with OpenCV3, GUI     |
 
 
