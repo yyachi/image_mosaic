@@ -43,7 +43,7 @@ Successful installation is confirmed by:
 
 # Commands
 
-Commands are summarized as:
+Commands to calculate affine transform are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
@@ -52,6 +52,11 @@ Commands are summarized as:
 | h_from_points       | Calculates a perspective transform from four pairs of the corresponding points.   Specify the points as arguments.|      [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 | haffine_from_params | Calculates an affine matrix of 2D rotation. Specify the center of the rotation in the source image, rotation angle and Isotropic scale factor as arguments.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool)|
 | haffine_from_points | Calculates an affine transform from three pairs of the corresponding points. Specify the points as arguments.|      |
+
+Commands are summarized as:
+
+| command             | description                                                                            | note |
+| ------------------- | -------------------------------------------------------------------------------------- | ---- |
 | blend-image         | Blend two images using alpha blend techniques                                          | user-interactive-command     |
 | crop_image          | Cut out a rectangular region of an image.|[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool),  [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 | image-warp-clicks   | Transform imagefile by matching three coordinates                                      | interactive-command     |
@@ -61,6 +66,7 @@ Commands are summarized as:
 | transform_image     | Applies an affine transformation to an image.                                                               |      |
 | transform_points    | Applies an affine transformation to points.                                                            |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
+
 
 # Usage
 
