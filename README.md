@@ -63,6 +63,7 @@ Commands to apply affine transform to an image or points are summarized as:
 | image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.     | interactive-command     |
 | image_in_image      | Put an image file in a wallpaper image with an affine transformation.|[rails project -- medusa](https://github.com/misasa/medusa)|
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |[gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
+
 Other commands are summarized as:
 
 | command             | description                                                                            | note |
