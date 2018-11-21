@@ -43,6 +43,14 @@ Successful installation is confirmed by:
 
 # Commands
 
+Commands to support imageometry file are summarized as:
+
+| command             | description                                                                            | note |
+| ------------------- | -------------------------------------------------------------------------------------- | ---- |
+| image-get-affine    |Calculates affine_xy2vs (also affine_ij2vs and anchors_xy) from anchors and anchors_ij in imageometry file. Accepts anchors_ij via GUI and anchors via stdin. | Not Compatible with OpenCV3. interactive-command|
+| image-warp-clicks   | Transform imagefile by matching three coordinates. Accepts anchors_ij via GUI and anchors via stdin.  Supports affine_ij2xy.                                      | Not compatible with OpenCV3. interactive-command.    |
+| image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file. Accepts user interaction via command-line arguments.    |Not compatible with OpenCV3. interactive-command.     |
+
 Commands to calculate a perspective transform from four pairs of the corresponding points are summarized as:
 
 | command             | description                                                                            | note |
@@ -55,7 +63,6 @@ Commands to calculate an affine transform from three pairs of the corresponding 
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
 | haffine_from_points |The three pairs of the corrensponding points are specified as command-line arguments.|Compatible with OpenCV3.|
 | affine_from_points  |The three pairs of the corrensponding points are input via stdin.        |Compatible with OpenCV3.  interactive-command|
-| image-get-affine    |Calculates affine_xy2vs (also affine_ij2vs and anchors_xy) from anchors and anchors_ij in imageometry file. Accepts anchors_ij via GUI and anchors via stdin. | Not Compatible with OpenCV3. interactive-command|
 
 
 Commands to calculate an affine matrix of 2D rotation from parameters are summarized as:
@@ -70,8 +77,6 @@ Commands to apply affine transform to an image or points are summarized as:
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
 | transform_image     | Applies an affine transformation to an image.                                                               |Compatible with OpenCV3.      |
 | transform_points    | Applies an affine transformation to points.                                                            |Compatible with OpenCV3. Used in [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
-| image-warp-clicks   | Transform imagefile by matching three coordinates. Accepts anchors_ij via GUI and anchors via stdin.  Supports affine_ij2xy.                                      | Not compatible with OpenCV3. interactive-command.    |
-| image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file. Accepts user interaction via command-line arguments.    |Not compatible with OpenCV3. interactive-command.     |
 | image_in_image      | Overlay an image file in a base image with an affine transformation. The affine transform is calculated from corners of the overlay image on the base image specified via command-line arguments.|Compatible with OpenCV3. Used in [rails project -- medusa](https://github.com/misasa/medusa).|
 | warp_image          | Impose an image file with rotated and magnified to an wallpaper image. Specify the wallpaper image and the transformation parameters as arguments.                         |Compatible with OpenCV3. Used in [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage)|
 
