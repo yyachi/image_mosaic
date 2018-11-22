@@ -43,7 +43,7 @@ Successful installation is confirmed by:
 
 # Commands
 
-Commands to support imageometry file are summarized as:
+Commands to project an image to VS space are shown below.
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
