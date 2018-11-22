@@ -51,24 +51,13 @@ Commands to project an image to VS space are shown below.
 | image-warp-clicks (obsolete) | Subset of `image-warp`, without -r and -d options.                                                                                                                                                                                                          | Incompatible with OpenCV3. Supports affine_ij2vs. Interactive-command. |
 | image-warp                   | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file.  Accepts user interaction via command-line arguments.                                                                 | Incompatible with OpenCV3. Supports affine_ij2vs. Interactive-command. |
 
-Commands to calculate a perspective transform from four pairs of the corresponding points are summarized as:
+Commands to calculate an affine transform are shown below.
 
 | command             | description                                                                                               | note                                                                                                                                                                                                                                                                                                                                                                         |
 | ------------------- | --------------------------------------------------------------------------------------                    | ----                                                                                                                                                                                                                                                                                                                                                                         |
 | h_from_points       | Return Affine matrix calculated from four pairs of coordinates.  The coordinates are fed by arguments. | Compatible with OpenCV3. Used in [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool), [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool), [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem), [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage). |
-
-Commands to calculate an affine transform from three pairs of the corresponding points are summarized as:
-
-| command             | description                                                                                 | note                                          |
-| ------------------- | --------------------------------------------------------------------------------------      | ----                                          |
 | haffine_from_points | Same as `h_from_points` but based on three pairs of coordinates instead of four.            | Compatible with OpenCV3.                      |
 | affine_from_points  | Same as `haffine_from_points` but arguments should be fed by stdin instead of by arguments. | Compatible with OpenCV3.  interactive-command |
-
-
-Commands to calculate an affine matrix of 2D rotation from parameters are summarized as:
-
-| command             | description                                                                                                                                                                                                                                           | note                                                                                                                 |
-| ------------------- | --------------------------------------------------------------------------------------                                                                                                                                                                | ----                                                                                                                 |
 | haffine_from_params | Return Affine matrix that corresponds to center of rotation, rotation, magnification, and shift of xxx.  Parameters are the center of the rotation in the source image, rotation angle and Isotropic scale factor. Accepts parameters via  arguments. | Compatible with OpenCV3. Used in [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool). |
 
 Commands to apply affine transform to an image or points are summarized as:
