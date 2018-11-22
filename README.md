@@ -47,7 +47,7 @@ Commands to support imageometry file are summarized as:
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| image-get-affine    |Calculates affine_xy2vs (also affine_ij2vs and anchors_xy) from anchors and anchors_ij in imageometry file. Accepts anchors_ij via GUI and anchors via stdin. | Not Compatible with OpenCV3. interactive-command|
+| image-get-affine    | Return affine_xy2vs (also affine_ij2vs and anchors_xy) estimated from anchors and anchors_ij in imageometry file. This command also reads anchors_ij via GUI and anchors via stdin. | Not compatible with OpenCV3.  interactive-command. |
 | image-warp-clicks   | Transform imagefile by matching three coordinates. Accepts anchors_ij via GUI and anchors via stdin.                                      | Not compatible with OpenCV3. Supports affine_ij2vs. interactive-command.    |
 | image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file. Accepts user interaction via command-line arguments.    |Not compatible with OpenCV3. Supports affine_ij2vs. interactive-command.     |
 
