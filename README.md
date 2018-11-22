@@ -61,8 +61,8 @@ Commands to calculate an affine transform from three pairs of the corresponding 
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| haffine_from_points |The three pairs of the corrensponding points are specified as command-line arguments.|Compatible with OpenCV3.|
-| affine_from_points  |The three pairs of the corrensponding points are input via stdin.        |Compatible with OpenCV3.  interactive-command|
+| haffine_from_points | Same as `h_from_points` but based on three pairs of coordinates instead of four. |Compatible with OpenCV3.|
+| affine_from_points  | Same as `haffine_from_points` but arguments should fed by stdin instead of by arguments.        |Compatible with OpenCV3.  interactive-command|
 
 
 Commands to calculate an affine matrix of 2D rotation from parameters are summarized as:
