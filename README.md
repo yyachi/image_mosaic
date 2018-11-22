@@ -47,9 +47,9 @@ Commands to project an image to VS space are shown below.
 
 | command             | description                                                                            | note |
 | ------------------- | -------------------------------------------------------------------------------------- | ---- |
-| image-get-affine    | Return affine_xy2vs (also affine_ij2vs and anchors_xy) estimated from anchors and anchors_ij in imageometry file.  This command also reads anchors_ij via GUI and anchors via stdin.  This command is subset of `image-warp` without image manupulation. | Not compatible with OpenCV3.  interactive-command. |
-| image-warp-clicks (obsolete)  | Subset of `image-warp` without -r and -d options.               | Not compatible with OpenCV3. Supports affine_ij2vs. interactive-command.    |
-| image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file. Accepts user interaction via command-line arguments.    |Not compatible with OpenCV3. Supports affine_ij2vs. interactive-command.     |
+| image-get-affine    | Return affine_xy2vs (also affine_ij2vs and anchors_xy) estimated from anchors and anchors_ij in imageometry file.  This command also reads anchors_ij via GUI and anchors via stdin.  This command is subset of `image-warp` (without image manupulation). | Incompatible with OpenCV3.  interactive-command. |
+| image-warp-clicks (obsolete)  | Subset of `image-warp` without -r and -d options.               | Incompatible with OpenCV3. Supports affine_ij2vs. interactive-command.    |
+| image-warp          | Project image file into VS space based on Affine matrix stored in imageometry file and export sub-area of the VS space as image file. Accepts user interaction via command-line arguments.    | Incompatible with OpenCV3. Supports affine_ij2vs. interactive-command.     |
 
 Commands to calculate a perspective transform from four pairs of the corresponding points are summarized as:
 
