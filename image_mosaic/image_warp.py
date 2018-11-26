@@ -558,8 +558,8 @@ DESCRIPTION
   then sub-area of the VS space is exported as `image_.jpg' with
   `image_.geo'.  We refer the image as image-of-VS.  The area of
   image-of-VS to be exported from VS space is specified by option
-  `--range'.  Without the option, minimum area that just covers the
-  transformed image is exported.
+  `--range'.  Without the option, minimum rectangled-area that surrounds
+  the projected image is exported.
 
 EXAMPLE
   CMD> dir
@@ -571,7 +571,7 @@ EXAMPLE
 
 SEE ALSO
   vs_attach_image.m
-  image-get-affine (renamed from vs-calc-affine.py)
+  image-get-affine (renamed from vs-calc-affine)
   image-warp-clicks
   blend-image
   https://github.com/misasa/image_mosaic
