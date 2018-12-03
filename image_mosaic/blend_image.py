@@ -4,10 +4,8 @@ import os
 import struct
 from optparse import OptionParser
 import cv2
-#from cv2 import cv
 
 def main():
-  # parser = OptionParser("usage: %prog [options] imageA imageB x y width height alpha beta")
   parser = OptionParser("""usage: %prog [options] imagefile0 imagefile1 x y width height alpha beta
 
 SYNOPSIS AND USAGE
@@ -27,7 +25,7 @@ EXAMPLE
 
 SEE ALSO
   image-warp
-  http://dream.misasa.okayama-u.ac.jp
+  https://github.com/misasa/image_mosaic
 
 IMPLEMENTATION
   Orochi, version 9
@@ -46,11 +44,10 @@ HISTORY
 
   (options, args) = parser.parse_args()
   if len(args) != 8:
-      parser.error("incorrect number of arguments")
+    parser.error("incorrect number of arguments")
 
   src1_path = args[0]
   src2_path = args[1]
-
 
   root_1, ext = os.path.splitext(src1_path)
   root_2, ext = os.path.splitext(src2_path)
