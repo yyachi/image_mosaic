@@ -11,20 +11,23 @@ from image_mosaic.opencv_util import *
 
 
 def main():
-	usage = textwrap.dedent('''\
+  usage = textwrap.dedent('''\
  %prog from_points to_points
-  # Hint
-  # > %prog [[100,50],[100,0],[0,0],[0,50]] [[-50,100],[0,100],[0,0],[-50,0]]
 
 SYNOPSIS AND USAGE
   %prog [options] from_points to_points
 
 DESCRIPTION
+Return Affine matrix calculated from four
+pairs of coordinates. Coordinates should be
+fed by arguments.
+
 
 EXAMPLE
+  > %prog [[100,50],[100,0],[0,0],[0,50]] [[-50,100],[0,100],[0,0],[-50,0]]
 
 SEE ALSO
-  http://dream.misasa.okayama-u.ac.jp
+  https://github.com/misasa/image_mosaic
 
 IMPLEMENTATION
   Orochi, version 9
@@ -34,31 +37,31 @@ IMPLEMENTATION
 HISTORY
   August 11, 2015: Add documentation
 ''')
-	parser = OptionParser(usage)
-	parser.add_option("-f", "--output-format", type="choice", default ='text', choices = ['text', 'yaml'], dest="output_format",
-	 				  help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
+  parser = OptionParser(usage)
+  parser.add_option("-f", "--output-format", type="choice", default ='text', choices = ['text', 'yaml'], dest="output_format",
+            help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
 
-	(options, args) = parser.parse_args()
-	if len(args) != 2:
-	     parser.error("incorrect number of arguments")
+  (options, args) = parser.parse_args()
+  if len(args) != 2:
+       parser.error("incorrect number of arguments")
 
-	src = str2array(args[0])
-	dst = str2array(args[1])
+  src = str2array(args[0])
+  dst = str2array(args[1])
 
-	num_points,n = src.shape
+  num_points,n = src.shape
 
-	if num_points < 4:
-		parser.error("requires at least 4 points")
+  if num_points < 4:
+    parser.error("requires at least 4 points")
 
-	if src.shape != dst.shape:
-		raise RuntimeError('number of points do not match')
+  if src.shape != dst.shape:
+    raise RuntimeError('number of points do not match')
 
-	h = cv2.getPerspectiveTransform(src,dst)
+  h = cv2.getPerspectiveTransform(src,dst)
 
-	if options.output_format == 'text':
-		print array2str(h)
-	elif options.output_format == 'yaml':
-		print yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True)
+  if options.output_format == 'text':
+    print array2str(h)
+  elif options.output_format == 'yaml':
+    print yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True)
 
 if __name__ == '__main__':
-	main()
+  main()
