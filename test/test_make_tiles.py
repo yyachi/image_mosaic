@@ -2,7 +2,7 @@ import sys
 import os
 import shutil
 from nose.tools import *
-from opencvtool.make_tiles import *
+from image_mosaic.make_tiles import *
 
 files_dir = os.path.join(os.path.dirname(__file__), 'files')
 saved = None

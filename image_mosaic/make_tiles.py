@@ -97,19 +97,33 @@ def main():
   #print "hello world"
   usage = textwrap.dedent('''\
  %prog image_path bounds([left,upper,right,bottom]) length center([x,y]) 
-  # Hint
-  # > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0]
-  # > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -z 3 -o maps/cat -t
 
 SYNOPSIS AND USAGE
   %prog image_path bounds([left,upper,right,bottom]) length center([x,y]) 
 
 DESCRIPTION
+  Project image to VS space and export squared sub-area of VS space as mosaic.
+  The mosaic consists of tiles of image with 256x256 pixels. Note that the edges
+  of the original image must be parallel to axis of VS space because this program
+  does not support projection with rotation. Location to project the original image
+  is set by x or y coordinate of four edges (x coordinate of left and right edges 
+  and y coordinate of upper and bottom edges). The squared sub-area on VS space is
+  specified by center and width. The number of tiles depends on zoom levels. At zoom
+  level 0 the squared sub-area is exported as a tile. Resolution of the tile is
+  256/width (pixel/micron). With increment of zoom level the number of exporting tiles
+  is multiplied by 2x2. This program generates a series of tiles for zoom level from 0
+  to max. The zoom level max is specified by arguments. The tiles are compatible with
+  Leaflet.js (a Javascript library for interactive maps). The tiles are exported as
+  {zoom level}/{x}_{y}.png where x and y correspond to n-th coordinate of tile in horizontal
+  and vertical direction. At zoom level 2, 16 tiles are exported as 2/0_0.png, 2/1_0.png,
+  2/2_0.png, ..., and 2/3_3.png with resolution 1024/width (pixel/micron).
 
 EXAMPLE
+  > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0]
+  > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -z 3 -o maps/cat -t
 
 SEE ALSO
-  http://dream.misasa.okayama-u.ac.jp
+  https://github.com/misasa/image_mosaic
 
 IMPLEMENTATION
   Orochi, version 9
@@ -122,13 +136,13 @@ HISTORY
 
   parser = OptionParser(usage)
   parser.add_option("-l", "--tilesize", type="int", dest="tilesize",
-	  				  help="tile size", metavar="TILESIZE", default=256)
+              help="tile size", metavar="TILESIZE", default=256)
   parser.add_option("-t", "--transparent", action="store_true", dest="transparent",
-	  				  help="transparent", metavar="TRANSPARENT", default=False)
+              help="transparent", metavar="TRANSPARENT", default=False)
   parser.add_option("-z", "--maxzoom", type="int", dest="maxzoom",
-	  				  help="max zoom level", metavar="MAXZOOM", default=2)
+              help="max zoom level", metavar="MAXZOOM", default=2)
   parser.add_option("-o", "--output-dir", type="string", dest="output_dir",
-	  				  help="output directory", metavar="OUTPUT_DIR")
+              help="output directory", metavar="OUTPUT_DIR")
 
   (options, args) = parser.parse_args()
 
