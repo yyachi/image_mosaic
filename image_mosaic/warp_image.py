@@ -66,7 +66,7 @@ HISTORY
   (options, args) = parser.parse_args()
 
   if len(args) != 1:
-       parser.error("incorrect number of arguments")
+    parser.error("incorrect number of arguments")
 
   image_path = args[0]
   root, ext = os.path.splitext(image_path)
@@ -78,7 +78,6 @@ HISTORY
 
   if options.output_path != None:
     output_path = options.output_path
-
 
   if os.path.exists(image_path) == False:
     parser.error("%s does not exist" % image_path)

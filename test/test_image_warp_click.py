@@ -1,6 +1,8 @@
 import os
 import shutil
 from nose.tools import *
+from mock import patch
+from mock import Mock
 from image_mosaic.image_warp_click import *
 
 files_dir = os.path.join(os.path.dirname(__file__), 'files')
@@ -20,10 +22,27 @@ def teardown():
   sys.argv = saved
 
 @with_setup(setup, teardown)
-@raises(SystemExit)
-def test_main():
-  # > %prog --scale 0.6 --center [100,50] --angle=-50.0 imagefile''')
+def test_get_anchor_on_stage():
   shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
-  sys.argv = ['image_warp_click','-h']
-  main()
+  sys.argv = ['image_warp_click','tmp/cat.jpg']
 
+@with_setup(setup, teardown)
+def test_main():
+  shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
+  sys.argv = ['image_warp_click','tmp/cat.jpg']
+  anchor_on_image = [(216, 216), (315, 198), (287, 280)]
+  anchor_on_stage = [(-50,50),(50,50),(50,-50)]
+  gui = Gui('tmp/cat.jpg', [500,500])
+  mock_get_anchor_on_image = Mock()
+  mock_get_anchor_on_image.return_value = anchor_on_image
+  gui.get_anchor_on_image = mock_get_anchor_on_image
+
+  mock_get_anchor_on_stage = Mock()
+  mock_get_anchor_on_stage.return_value = anchor_on_stage
+  gui.get_anchor_on_stage = mock_get_anchor_on_stage
+
+  with patch('image_mosaic.image_warp_click.get_image_window') as mock:
+    mock.return_value = gui
+    with patch('image_mosaic.image_warp_click.show_images')  as mock2:
+      mock2.return_value = None
+      main()
