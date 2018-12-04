@@ -18,6 +18,7 @@ def teardown():
   sys.argv = saved
 
 @with_setup(setup, teardown)
+@raises(SystemExit)
 def test_main():
-  sys.argv = ['affine_from_points', '-f', 'yaml']
+  sys.argv = ['affine_from_points', '-h']
   main()
