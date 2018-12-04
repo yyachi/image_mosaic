@@ -7,7 +7,7 @@ with open('README.md') as f:
 with open('LICENSE') as f:
     license = f.read()
 
-version = '1.0.0'
+version = '0.1.3'
 
 setup(name='image_mosaic',
       version=version,
