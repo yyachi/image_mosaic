@@ -22,7 +22,6 @@ DESCRIPTION
   this will look for imageometry file `raman.geo'.  Very likly you
   have to invoke this program from CMD prompt on MS Windows.
 
-  This command also reads anchors_ij via GUI and anchors via stdin.
   This command is subset of image-warp, without image manipulation.
 
 EXAMPLE
