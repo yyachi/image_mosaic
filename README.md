@@ -1,9 +1,8 @@
 # python package -- image_mosaic
 
 A series of image utilities.  Use this ImageMosaic package to crop, rotate, or
-enlarge bitmap images.  This package was developed as [python package
--- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/pythonpackage/opencvtool)
-until 2018-08.
+enlarge bitmap images.  This package was developed as python package
+-- opencvtool until 2018-08.
 
 See [gem package -- vstool](https://gitlab.misasa.okayama-u.ac.jp/gems/vstool) that refers to this package.
 See [gem package -- opencvtool](https://gitlab.misasa.okayama-u.ac.jp/gems/opencvtool) that refers to this package.
