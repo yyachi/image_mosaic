@@ -43,10 +43,33 @@ Successful installation is confirmed by:
  CMD> image-warp --help
 
 ## macOS
-    $ python -V
-    Python 2.7.5
-    $ pip install git+https://github.com/misasa/image_mosaic.git
+Download and install the [Anaconda (a distribution of Python for data science).](https://www.anaconda.com/)
 
+    $ cd ~/Downloads/
+    $ wget https://repo.anaconda.com/archive/Anaconda3-5.3.1-MacOSX-x86_64.pkg
+    $ open Anaconda3-5.3.0-MacOSX-x86_64.pkg
+    $ source ~/.bash_profile
+    $ which python
+    /Users/dream/anaconda3/bin/python
+    $ python -V
+    Python 3.7.0
+    
+Install OpenCV into Anaconda.
+    $ conda install -c conda-forge opencv
+    $ conda list | grep opencv
+    opencv                    3.4.1           py36_blas_openblash553dce0_201    conda-forge
+
+Install scipy into Anaconda.
+    $ conda install scipy
+    $ conda list | grep scipy
+    scipy                     1.1.0            py36h1a1e112_1  
+
+Install this package.
+    $ git clone https://github.com/misasa/image_mosaic.git
+    $ cd image_mosaic
+    $ python setup.py install
+    $ conda list | grep image-mosaic
+    image-mosaic              0.1.5                     <pip>
 
 # Commands
 
