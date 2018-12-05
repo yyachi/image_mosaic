@@ -26,7 +26,7 @@ setup(name='image_mosaic',
             "PyYAML",
             "numpy",
             "scipy",
-            "pillow",
+            "PIL",
           # -*- Extra requirements: -*-
       ],
       entry_points={
