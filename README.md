@@ -39,10 +39,13 @@ or as:
     ADMIN.CMD> pip install master.zip
 
 Successful installation is confirmed by:
-
-    CMD> image-warp --help
+   
+ CMD> image-warp --help
 
 ## macOS
+    $ python -V
+    Python 2.7.5
+    $ pip install git+https://github.com/misasa/image_mosaic.git
 
 
 # Commands
