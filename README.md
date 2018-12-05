@@ -55,16 +55,19 @@ Download and install the [Anaconda (a distribution of Python for data science).]
     Python 3.7.0
     
 Install OpenCV into Anaconda.
+
     $ conda install -c conda-forge opencv
     $ conda list | grep opencv
     opencv                    3.4.1           py36_blas_openblash553dce0_201    conda-forge
 
 Install scipy into Anaconda.
+
     $ conda install scipy
     $ conda list | grep scipy
     scipy                     1.1.0            py36h1a1e112_1  
 
 Install this package.
+
     $ git clone https://github.com/misasa/image_mosaic.git
     $ cd image_mosaic
     $ python setup.py install
