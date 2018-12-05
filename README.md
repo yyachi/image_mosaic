@@ -42,6 +42,9 @@ Successful installation is confirmed by:
 
     CMD> image-warp --help
 
+## macOS
+
+
 # Commands
 
 Commands to project an image to VS space are shown below.
