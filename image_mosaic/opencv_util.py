@@ -6,9 +6,11 @@ def image_pixel_to_coord(point, width, height):
   image_center = [float(width/2), float(height/2)]
   d = [float(point[0]) - image_center[0], image_center[1] - float(point[1])]
   if width > height:
-    pp = map((lambda x: float(x)/width * 100), d)
+    pp = [float(p)/width * 100 for p in d]
+    #pp = map((lambda x: float(x)/width * 100), d)
   else:
-    pp = map((lambda x: float(x)/height * 100), d)
+    pp = [float(p)/height * 100 for p in d]
+    #pp = map((lambda x: float(x)/height * 100), d)
   return pp
 
 def get_affine_matrix(tsrc, tdst):
@@ -46,7 +48,7 @@ def affine_to_list(affine):
 
 def is_answer_yes(prompt = "answer yes/no", default = True, answer_yes = False):
   if answer_yes:
-    print prompt
+    print(prompt)
     return True
   else:
     input = raw_input(prompt).lower()

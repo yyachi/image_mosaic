@@ -6,8 +6,8 @@ import time
 import math
 import yaml
 from optparse import OptionParser
-from stage import *
-from opencv_util import *
+from image_mosaic.stage import *
+from image_mosaic.opencv_util import *
 
 def main():
   parser = OptionParser("""usage: %prog [options] imagefile
@@ -117,7 +117,7 @@ HISTORY
 #  print "original image: %dx%d (%.3f)" % (original_width, original_height, original_aspect)
 
   if os.path.isfile(default_yfile_path):
-    yf = open(default_yfile_path).read().decode('utf8')
+    yf = open(default_yfile_path, 'rb').read().decode('utf8')
     config = yaml.load(yf)
     if 'affine_xy2vs' in config:
       affine_input = list_to_affine(config['affine_xy2vs'])
@@ -126,8 +126,8 @@ HISTORY
       image_rect_on_stage = transform_points(image_rect_coord, affine_input)
       affine_image2stage = get_affine_matrix(image_rect, image_rect_on_stage)
       if options.verbose:
-        print "Input affine matrix to stage is %s." % (affine_to_str(affine_input))
-        print "%s %dx%d pix was calibrated based on %s. It's affine matrix to stage is %s." % (os.path.basename(image_path), original_width, original_height, os.path.basename(default_yfile_name), affine_to_str(affine_input))
+        print("Input affine matrix to stage is %s." % (affine_to_str(affine_input)))
+        print("%s %dx%d pix was calibrated based on %s. It's affine matrix to stage is %s." % (os.path.basename(image_path), original_width, original_height, os.path.basename(default_yfile_name), affine_to_str(affine_input)))
     else:
       raise RuntimeError("affine_xy2vs is not found in %s." % default_yfile_path)
   else:
@@ -156,15 +156,15 @@ HISTORY
 
   dpi = win_view.output_pixels_per_um * 10000 * 2.54
   if options.verbose:
-    print "Calibrated image was saved as %s %dx%d pix. " % (default_ofile_path, win_view.output_image.width, win_view.output_image.height)
-    print "Density: %.3f x %.3f dpi" % (dpi, dpi)
-    print "Please use the following parameters to place the calibrated image."
-    print "Locate:\t(%7.3f, %7.3f) um" % (win_view.output_rect_on_stage[0][0], win_view.output_rect_on_stage[0][1])
-    print "Center:\t(%7d, %7d) dot" % (0, 0)
-    print "Size:\t(%7.3f, %7.3f) um" % (win_view.stage_width, win_view.stage_height)
+    print("Calibrated image was saved as %s %dx%d pix. " % (default_ofile_path, win_view.output_image.width, win_view.output_image.height))
+    print("Density: %.3f x %.3f dpi" % (dpi, dpi))
+    print("Please use the following parameters to place the calibrated image.")
+    print("Locate:\t(%7.3f, %7.3f) um" % (win_view.output_rect_on_stage[0][0], win_view.output_rect_on_stage[0][1]))
+    print("Center:\t(%7d, %7d) dot" % (0, 0))
+    print("Size:\t(%7.3f, %7.3f) um" % (win_view.stage_width, win_view.stage_height))
 
   if options.flag_window:
-    print "activate %s window and type escape to terminate." % (win_view.window_name)
+    print("activate %s window and type escape to terminate." % (win_view.window_name))
 
     while True:
       cv2.imshow(win_view.window_name, win_view.temp)

@@ -1,5 +1,5 @@
 import cv2
-from opencv_util import *
+from image_mosaic.opencv_util import *
 import os
 
 class Gui:
@@ -102,8 +102,8 @@ class Gui:
     cv2.line(image, (pt[0], 0), (pt[0], self.original_image.shape[1] - 1), (255,255,255))
 
   def get_anchor_on_image(self):
-    print "click image and specify 3 anchor points."
-    print "#\tx(pix)\ty(pix)"
+    print("click image and specify 3 anchor points.")
+    print("#\tx(pix)\ty(pix)")
     count = 0
     self.interactive_mode()
 
@@ -113,7 +113,7 @@ class Gui:
         anchor = self.anchors()[-1]
         anchor_coord = image_pixel_to_coord(anchor, self.original_image.shape[0], self.original_image.shape[1])
         #print count + 1, anchor[0], anchor[1]
-        print "%d\t%.3f\t%.3f" % (count+1,anchor_coord[0],anchor_coord[1])
+        print("%d\t%.3f\t%.3f" % (count+1,anchor_coord[0],anchor_coord[1]))
         count += 1
       if count == 3:
         self.normal_mode()
@@ -122,8 +122,8 @@ class Gui:
     return self.anchors()
 
   def get_anchor_on_stage(self):
-    print "input stage coordinates of each anchor points."
-    print "#\tx(um)\ty(um)"
+    print("input stage coordinates of each anchor points.")
+    print("#\tx(um)\ty(um)")
     while True:
       anchors_on_stage = []
       for idx in range(3):

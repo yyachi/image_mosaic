@@ -7,7 +7,7 @@ import yaml
 import cv2
 from optparse import OptionParser
 #sys.path.append(os.path.join(os.path.dirname(__file__),'../lib'))
-from opencv_util import *
+from image_mosaic.opencv_util import *
 
 
 def main():
@@ -59,9 +59,9 @@ HISTORY
   h = cv2.getAffineTransform(src,dst)
   h = numpy.append(h, numpy.array([0.0,0.0,1.0])).reshape(3,3)
   if options.output_format == 'text':
-    print array2str(h)
+    print(array2str(h))
   elif options.output_format == 'yaml':
-    print yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True)
+    print(yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True))
 
 if __name__ == '__main__':
   main()

@@ -59,9 +59,9 @@ HISTORY
   h = cv2.getPerspectiveTransform(src,dst)
 
   if options.output_format == 'text':
-    print array2str(h)
+    print(array2str(h))
   elif options.output_format == 'yaml':
-    print yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True)
+    print(yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True))
 
 if __name__ == '__main__':
   main()

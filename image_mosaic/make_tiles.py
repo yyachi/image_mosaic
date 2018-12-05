@@ -77,7 +77,7 @@ def make_tiles(zoom, img, dirname, options):
           part = part.resize(rsize)
           tile.paste(part, roi_in_tile)
         except:
-          print "failed to generate %s" % tile_path
+          print("failed to generate %s" % tile_path)
         #print "tile", cbox, "world:", ppbox, roi_in_tile 
         #print "image", cbox, "img", ibox, roi_in_image
       #else:

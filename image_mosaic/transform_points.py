@@ -8,7 +8,7 @@ import cv2
 import math
 from optparse import OptionParser
 #sys.path.append(os.path.join(os.path.dirname(__file__),'../lib'))
-from opencv_util import *
+from image_mosaic.opencv_util import *
 
 def main():
   usage = textwrap.dedent('''\
@@ -81,9 +81,9 @@ HISTORY
 
 
   if options.output_format == 'text':
-    print array2str(dst)
+    print(array2str(dst))
   elif options.output_format == 'yaml':
-    print yaml.dump(dst.tolist(), encoding='utf8', allow_unicode=True)
+    print(yaml.dump(dst.tolist(), encoding='utf8', allow_unicode=True))
 
 
 if __name__ == '__main__':

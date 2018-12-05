@@ -5,15 +5,15 @@ import cv2
 import time
 import math
 import yaml
-from stage import *
-from gui import *
+from image_mosaic.stage import *
+from image_mosaic.gui import *
 from optparse import OptionParser
 
 def get_image_window(image_path):
   return Gui(image_path,[500,500])
 
 def show_images(guis):
-  print "activate %s window and type escape to terminate." % (guis[-1].window_name)
+  print("activate %s window and type escape to terminate." % (guis[-1].window_name))
   while True:
     for gui in guis:
       cv2.imshow(gui.window_name, gui.temp)
@@ -23,7 +23,7 @@ def main():
   argvs = sys.argv
   argc = len(argvs)
   if (argc != 2):
-      print 'Usage: # python %s filename' % argvs[0]
+      print('Usage: # python %s filename' % argvs[0])
       quit()
 
   parser = OptionParser("""usage: %prog [options] imagefile
@@ -94,18 +94,18 @@ HISTORY
   #print "original image: %dx%d (%.3f)" % (original_width, original_height, original_aspect)
 
   if os.path.isfile(default_yfile_path):
-    print "%s loading..." % default_yfile_path
+    print("%s loading..." % default_yfile_path)
     yf = open(default_yfile_path).read().decode('utf8')
     config = yaml.load(yf)
   # affine_input = list_to_affine(yaml.load(yf))
     if 'affine_xy2vs' in config:
       affine_input = list_to_affine(config['affine_xy2vs'])
-      print "Input affine matrix to stage is %s." % (affine_to_str(affine_input))
+      print("Input affine matrix to stage is %s." % (affine_to_str(affine_input)))
       image_rect = [(0,0),(original_width,0),(original_width,original_height),(0,original_height)]
       image_rect_coord = [image_pixel_to_coord(p, original_width, original_height) for p in image_rect]
       image_rect_on_stage = transform_points(image_rect_coord, affine_input)
       affine_image2stage = get_affine_matrix(image_rect, image_rect_on_stage)
-      print "%s %dx%d pix was calibrated based on %s. It's affine matrix to stage is %s." % (os.path.basename(image_path), original_width, original_height, os.path.basename(default_yfile_name), affine_to_str(affine_input))
+      print("%s %dx%d pix was calibrated based on %s. It's affine matrix to stage is %s." % (os.path.basename(image_path), original_width, original_height, os.path.basename(default_yfile_name), affine_to_str(affine_input)))
 
   else:
     interactive = True
@@ -125,17 +125,16 @@ HISTORY
   # center = [float(original_width)/2, float(original_height)/2]
   # win.draw_point(win.temp, tuple([int(round(x * win.r_view)) for x in center]), (0,255,0))
     anchors_on_image_coord = [image_pixel_to_coord(p, original_width, original_height) for p in anchors_on_image]
-
-    print "#\tx(pix)\ty(pix)\tx(um)\ty(um)"
+    print("#\tx(pix)\ty(pix)\tx(um)\ty(um)")
     for idx in range(len(anchors_on_image)):
-      print "%d\t%.3f\t%.3f\t%.3f\t%.3f" % (idx+1,anchors_on_image_coord[idx][0], anchors_on_image_coord[idx][1],anchors_on_stage[idx][0],anchors_on_stage[idx][1])
+      print("%d\t%.3f\t%.3f\t%.3f\t%.3f" % (idx+1,anchors_on_image_coord[idx][0], anchors_on_image_coord[idx][1],anchors_on_stage[idx][0],anchors_on_stage[idx][1]))
 
     affine_image2stage = get_affine_matrix(anchors_on_image, anchors_on_stage)
     affine_for_output = get_affine_matrix(anchors_on_image_coord, anchors_on_stage)
 
     f = open(default_yfile_path, 'w')
     yaml.dump({'affine_xy2vs': affine_to_list(affine_for_output) }, f, encoding='utf8', allow_unicode=True)
-    print "%s %dx%d pix was calibrated. It's affine matrix to stage was %s." % (os.path.basename(image_path), original_width, original_height, affine_to_str(affine_for_output))
+    print("%s %dx%d pix was calibrated. It's affine matrix to stage was %s." % (os.path.basename(image_path), original_width, original_height, affine_to_str(affine_for_output)))
     cv2.imshow(win.window_name, win.temp)
 
   win_view = Stage(image_path, default_ofile_name)
@@ -151,11 +150,11 @@ HISTORY
   f = open(warped_yfile_path, 'w')
   yaml.dump({ 'affine_xy2vs': affine_to_list(affine_warped) }, f, encoding='utf8', allow_unicode=True)
 
-  print "Calibrated image was saved as %s %dx%d pix. " % (default_ofile_path, win_view.output_image.shape[0], win_view.output_image.shape[1])
-  print "Please use the following parameters to place the calibrated image."
-  print "Locate:\t(%7.3f, %7.3f) um" % (win_view.output_rect_on_stage[0][0], win_view.output_rect_on_stage[0][1])
-  print "Center:\t(%7d, %7d) dot" % (0, 0)
-  print "Size:\t(%7.3f, %7.3f) um" % (win_view.stage_width, win_view.stage_height)
+  print("Calibrated image was saved as %s %dx%d pix. " % (default_ofile_path, win_view.output_image.shape[0], win_view.output_image.shape[1]))
+  print("Please use the following parameters to place the calibrated image.")
+  print("Locate:\t(%7.3f, %7.3f) um" % (win_view.output_rect_on_stage[0][0], win_view.output_rect_on_stage[0][1]))
+  print("Center:\t(%7d, %7d) dot" % (0, 0))
+  print("Size:\t(%7.3f, %7.3f) um" % (win_view.stage_width, win_view.stage_height))
 
   if os.path.isfile(default_yfile_name) != True:
     show_images([win, win_view])

@@ -1,5 +1,5 @@
 import cv2
-from opencv_util import *
+from image_mosaic.opencv_util import *
 
 class Stage:
   def __init__(self, image_path, title):
@@ -53,10 +53,10 @@ class Stage:
     self.stage_aspect = stage_aspect
 
     if verbose:
-      print "set_stage_geometry_from_affine"
-      print "image_rect_on_stage:", image_rect_on_stage
-      print "stage x: %f <-> %f" % (self.min_stage_x, self.max_stage_x)
-      print "stage y: %f <-> %f" % (self.min_stage_y, self.max_stage_y)
+      print("set_stage_geometry_from_affine")
+      print("image_rect_on_stage:", image_rect_on_stage)
+      print("stage x: %f <-> %f" % (self.min_stage_x, self.max_stage_x))
+      print("stage y: %f <-> %f" % (self.min_stage_y, self.max_stage_y))
 
   def set_output_size_from_aspect(self, verbose = False):
     height, width, channels = self.original_image.shape
@@ -71,10 +71,10 @@ class Stage:
     output_image_width = output_image_width_height[0]
     output_image_height = output_image_width_height[1]
     if verbose:
-      print "stage_aspect x image_height:", stage_aspect * height
-      print "image_width / stage_aspect:", float(width) / stage_aspect
-      print "based on width:", output_width_height_based_width
-      print "based on height:", output_width_height_based_height
+      print("stage_aspect x image_height:", stage_aspect * height)
+      print("image_width / stage_aspect:", float(width) / stage_aspect)
+      print("based on width:", output_width_height_based_width)
+      print("based on height:", output_width_height_based_height)
 
     self.output_size = tuple(output_image_width_height)
     self.output_pixels_per_um = float(output_image_width_height[0]) / self.stage_width
@@ -90,10 +90,10 @@ class Stage:
     #cv.Resize(self.output_image, self.resized_image)
     self.resized_image = cv2.resize(self.output_image, resize)
     if verbose:
-      print "resize_image"
-      print "original pixels_per_um: %.3f" % (self.original_pixels_per_um)
-      print "output image: %dx%d (%.3f)" % (self.output_size[0], self.output_size[1], float(self.output_size[0])/self.output_size[1])
-      print "output pixels_per_um: %.3f" % (self.output_pixels_per_um)
+      print("resize_image")
+      print("original pixels_per_um: %.3f" % (self.original_pixels_per_um))
+      print("output image: %dx%d (%.3f)" % (self.output_size[0], self.output_size[1], float(self.output_size[0])/self.output_size[1]))
+      print("output pixels_per_um: %.3f" % (self.output_pixels_per_um))
 
 
   def warp_image(self, affine, view_geometry, verbose = False):
@@ -117,16 +117,16 @@ class Stage:
 
 
     if verbose:
-      print "image_rect_on_stage:", image_rect_on_stage
-      print "stage x: %f <-> %f" % (self.min_stage_x, self.max_stage_x)
-      print "stage y: %f <-> %f" % (self.min_stage_y, self.max_stage_y)
-      print "stage_width:", self.stage_width
-      print "stage_height:", self.stage_height
-      print "stage_aspect:", self.stage_aspect
-      print "image_aspect:", self.image_aspect
-      print "original pixels_per_um: %.3f" % (self.original_pixels_per_um)
-      print "output image: %dx%d (%.3f)" % (self.output_size[0], self.output_size[1], float(self.output_size[0])/self.output_size[1])
-      print "output pixels_per_um: %.3f" % (self.output_pixels_per_um)
+      print("image_rect_on_stage:", image_rect_on_stage)
+      print("stage x: %f <-> %f" % (self.min_stage_x, self.max_stage_x))
+      print("stage y: %f <-> %f" % (self.min_stage_y, self.max_stage_y))
+      print("stage_width:", self.stage_width)
+      print("stage_height:", self.stage_height)
+      print("stage_aspect:", self.stage_aspect)
+      print("image_aspect:", self.image_aspect)
+      print("original pixels_per_um: %.3f" % (self.original_pixels_per_um))
+      print("output image: %dx%d (%.3f)" % (self.output_size[0], self.output_size[1], float(self.output_size[0])/self.output_size[1]))
+      print("output pixels_per_um: %.3f" % (self.output_pixels_per_um))
     output_width, output_height = self.output_size
 
     output_rect = [(0,0),(self.output_size[0],0),(self.output_size[0],self.output_size[1]),(0,self.output_size[1])]
@@ -142,9 +142,9 @@ class Stage:
     self.output_center_on_stage = transform_points(self.output_center, affine_output2stage)[0]
 
     if verbose:
-      print "output_rect:", output_rect
-      print "output_rect_on_stage:", output_rect_on_stage
-      print "output_center_on_stage:", self.output_center_on_stage
+      print("output_rect:", output_rect)
+      print("output_rect_on_stage:", output_rect_on_stage)
+      print("output_center_on_stage:", self.output_center_on_stage)
 
     image_rect_on_output = transform_points(image_rect_on_stage, affine_stage2output)
     affine_image2output = get_affine_matrix(image_rect[0:3], image_rect_on_output[0:3])
@@ -157,11 +157,11 @@ class Stage:
     self.output_image = cv2.warpPerspective(self.original_image, affine_image2output, (output_width, output_height))
 
     if verbose:
-      print "original_center_on_output:", self.original_center_on_output
-      print "original_center_on_stage:", original_center_on_stage
-      print "image_rect:", image_rect
-      print "image_rect_on_stage:", image_rect_on_stage
-      print "image_rect_on_output:", image_rect_on_output
+      print("original_center_on_output:", self.original_center_on_output)
+      print("original_center_on_stage:", original_center_on_stage)
+      print("image_rect:", image_rect)
+      print("image_rect_on_stage:", image_rect_on_stage)
+      print("image_rect_on_output:", image_rect_on_output)
       pos = [(int(t[0]), int(t[1])) for t in image_rect_on_output]
       cv2.polylines( self.output_image, numpy.int32([numpy.array(pos)]), True, (0,255,0), 10, 8)
 
@@ -181,7 +181,7 @@ class Stage:
   def rectangle_on_stage(self, pt1, pt2, color, thickness=1, lineType=8, shift=0):
     points_on_stage = [pt1, pt2]
     points_on_output = transform_points(points_on_stage, self.affine_stage2output)
-    print points_on_output
+    print(points_on_output)
     pos = [(int(t[0]), int(t[1])) for t in points_on_output]
     cv.Rectangle(self.output_image, pos[0], pos[1], color, thickness, lineType, shift)
 

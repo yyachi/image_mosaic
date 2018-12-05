@@ -5,7 +5,7 @@ from numpy import *
 import cv2
 import textwrap
 from optparse import OptionParser
-from opencv_util import *
+from image_mosaic.opencv_util import *
 
 def get_anchor_on_stage():
   sys.stderr.write("#\tsrc x\tsrc y\tdst x\tdst y\n")
@@ -80,9 +80,9 @@ HISTORY
   h = cv2.getAffineTransform(src,dst)
   h = numpy.append(h, numpy.array([0.0,0.0,1.0])).reshape(3,3)
   if options.output_format == 'text':
-    print array2str(h)
+    print(array2str(h))
   elif options.output_format == 'yaml':
-    print yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True)
+    print(yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True))
 
 if __name__ == '__main__':
   main()
