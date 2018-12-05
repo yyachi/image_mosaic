@@ -14,18 +14,18 @@ See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okay
 
 ## [OpenCV](https://opencv.org/releases.html)
 
+# Installation
+
+## Windows
+
 Download OpenCV for MS Windows, uncompress the archive, and copy a Python library file `CV2.pyd` to local Python directory such for `C:\Python27\Lib\site-packages`.
 
     $ cd ~/Downlaods/
     $ wget https://sourceforge.net/projects/opencvlibrary/files/opencv-win/2.4.13/opencv-2.4.13.6-vc14.exe/download
     CMD> cd %USERPROFILE%\Downloads\
     CMD> copy opencv\build\python\2.7\x64\cv2.pyd C:\Python27\Lib\site-packages\
-
-# Installation
-
-## Windows
-
-Install it as Administrator as:
+    
+Install this package as Administrator as:
 
     ADMIN.CMD> pip install git+https://github.com/misasa/image_mosaic.git
 
