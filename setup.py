@@ -24,7 +24,9 @@ setup(name='image_mosaic',
       zip_safe=False,
       install_requires=[
             "PyYAML",
-            "numpy"
+            "numpy",
+            "scipy",
+            "pillow",
           # -*- Extra requirements: -*-
       ],
       entry_points={
