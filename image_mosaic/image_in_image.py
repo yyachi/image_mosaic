@@ -50,7 +50,7 @@ HISTORY
   image_path1 = args[0]
   image_path2 = args[1]
 # corner_points = str2array(args[2])
-        corner_points = numpy.array(eval(args[2]), dtype=numpy.float32)
+  corner_points = numpy.array(eval(args[2]), dtype=numpy.float32)
 
   root1, ext1 = os.path.splitext(image_path1)
   root2, ext2 = os.path.splitext(image_path2)

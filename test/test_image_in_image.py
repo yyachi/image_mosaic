@@ -2,7 +2,7 @@ import sys
 import os
 import shutil
 from nose.tools import *
-from opencvtool.image_in_image import *
+from image_mosaic.image_in_image import *
 
 files_dir = os.path.join(os.path.dirname(__file__), 'files')
 saved = None
