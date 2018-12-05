@@ -23,6 +23,8 @@ Download OpenCV for MS Windows, uncompress the archive, and copy a Python librar
 
 # Installation
 
+## Windows
+
 Install it as Administrator as:
 
     ADMIN.CMD> pip install git+https://github.com/misasa/image_mosaic.git
