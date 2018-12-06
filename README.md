@@ -40,7 +40,7 @@ or as:
 
 Successful installation is confirmed by:
    
- CMD> image-warp --help
+    CMD> image-warp --help
 
 ## macOS
 Download and install the [Anaconda (a distribution of Python for data science).](https://www.anaconda.com/)
