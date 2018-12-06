@@ -45,7 +45,6 @@ HISTORY
   (options, args) = parser.parse_args()
   if len(args) != 8:
     parser.error("incorrect number of arguments")
-
   src1_path = args[0]
   src2_path = args[1]
 
@@ -68,9 +67,9 @@ HISTORY
   beta = float(args[7])
 
   #src1 = cv.LoadImage(src1_path, cv.CV_LOAD_IMAGE_UNCHANGED)
-  src1 = cv2.imread(src1_path, cv2.IMREAD_UNCHANGED)
+  src1 = cv2.imread(src1_path)
   #src2 = cv.LoadImage(src2_path, cv.CV_LOAD_IMAGE_UNCHANGED)
-  src2 = cv2.imread(src2_path, cv2.IMREAD_UNCHANGED)
+  src2 = cv2.imread(src2_path)
   #cv.SetImageROI(src1, (x, y, width, height))
   #cv.SetImageROI(src2, (0, 0, width, height))
   #cv.AddWeighted(src1, alpha, src2, beta, 0.0, src1)
