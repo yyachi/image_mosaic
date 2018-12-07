@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys
 import os
-import struct
 from optparse import OptionParser
 import cv2
 

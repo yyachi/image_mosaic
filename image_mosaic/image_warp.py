@@ -2,12 +2,10 @@
 import os
 import sys
 import cv2
-import time
-import math
 import yaml
 from optparse import OptionParser
 from image_mosaic.stage import *
-from image_mosaic.opencv_util import *
+from image_mosaic.util import *
 
 def main():
   parser = OptionParser("""usage: %prog [options] imagefile

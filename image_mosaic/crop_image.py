@@ -7,8 +7,7 @@ import yaml
 import re
 import cv2
 from optparse import OptionParser
-#sys.path.append(os.path.join(os.path.dirname(__file__),'../lib'))
-from image_mosaic.opencv_util import *
+from image_mosaic.util import *
 
 def main():
   usage = textwrap.dedent('''\

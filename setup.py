@@ -7,7 +7,7 @@ with open('README.md') as f:
 with open('LICENSE') as f:
     license = f.read()
 
-version = '0.1.7'
+version = '0.1.8'
 
 setup(name='image_mosaic',
       version=version,
@@ -25,7 +25,6 @@ setup(name='image_mosaic',
       install_requires=[
             "PyYAML",
             "numpy",
-            "scipy",
             "Pillow",
           # -*- Extra requirements: -*-
       ],

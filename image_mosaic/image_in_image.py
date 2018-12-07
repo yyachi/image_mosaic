@@ -4,10 +4,8 @@ import sys
 import textwrap
 import numpy
 import yaml
-#import scipy
 import cv2
 from optparse import OptionParser
-#from opencv_util import *
 
 def main():
   usage = textwrap.dedent('''\

@@ -4,10 +4,8 @@ import os
 import sys
 import cv2
 import numpy as np
-import time
-import math
 import yaml
-from image_mosaic.opencv_util import *
+from image_mosaic.util import *
 
 def main():
   parser = OptionParser("""usage: image-get-affine [options] image

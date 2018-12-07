@@ -5,7 +5,7 @@ from numpy import *
 import cv2
 import textwrap
 from optparse import OptionParser
-from image_mosaic.opencv_util import *
+from image_mosaic.util import *
 
 def get_anchor_on_stage():
   sys.stderr.write("#\tsrc x\tsrc y\tdst x\tdst y\n")

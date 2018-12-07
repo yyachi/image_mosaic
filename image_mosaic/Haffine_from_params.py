@@ -6,7 +6,7 @@ import numpy
 import yaml
 import cv2
 from optparse import OptionParser
-from image_mosaic.opencv_util import *
+from image_mosaic.util import *
 
 def main():
   usage = textwrap.dedent('''\

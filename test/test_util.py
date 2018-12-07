@@ -3,7 +3,7 @@ import os
 import shutil
 import numpy as np
 from nose.tools import *
-from image_mosaic.opencv_util import *
+from image_mosaic.util import *
 
 files_dir = os.path.join(os.path.dirname(__file__), 'files')
 saved = None

@@ -1,5 +1,5 @@
 import cv2
-from image_mosaic.opencv_util import *
+from image_mosaic.util import *
 import os
 
 class Gui:

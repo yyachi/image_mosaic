@@ -3,12 +3,8 @@ import os
 import sys
 import textwrap
 import numpy
-import yaml
-import scipy
 from PIL import Image, ImageChops
-#import cv2
 from optparse import OptionParser
-#from opencv_util import *
 
 def make_tiles(zoom, img, dirname, options):
   dirname = os.path.join(dirname,str(zoom))
