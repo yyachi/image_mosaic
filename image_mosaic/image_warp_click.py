@@ -9,15 +9,15 @@ from image_mosaic.stage import *
 from image_mosaic.gui import *
 from optparse import OptionParser
 
-def get_image_window(image_path):
+def get_gui(image_path):
   return Gui(image_path,[500,500])
 
-def show_images(guis):
-  print("activate %s window and type escape to terminate." % (guis[-1].window_name))
+def show_image(name, image):
+  print("activate %s window and type escape to terminate." % (name))
   while True:
-    for gui in guis:
-      cv2.imshow(gui.window_name, gui.temp)
-    if cv2.waitKey(15) == 27: break
+    cv2.imshow(name, image)
+    if cv2.waitKey(15) == 27:
+      break
 
 def main():
   argvs = sys.argv
@@ -85,19 +85,14 @@ HISTORY
   default_yfile_path = os.path.join(target_dir, default_yfile_name)
   warped_yfile_path = os.path.join(target_dir, warped_yfile_name)
 
-
-  win = get_image_window(image_path)
-  #win = ImageWindow(image_path,[500,500])
-  original_width = win.original_image.shape[0]
-  original_height = win.original_image.shape[1]
+  gui = get_gui(image_path)
+  original_height, original_width, original_channels = gui.original_image.shape
   original_aspect = float(original_width) / original_height
-  #print "original image: %dx%d (%.3f)" % (original_width, original_height, original_aspect)
-
+  
   if os.path.isfile(default_yfile_path):
     print("%s loading..." % default_yfile_path)
     yf = open(default_yfile_path).read().decode('utf8')
     config = yaml.load(yf)
-  # affine_input = list_to_affine(yaml.load(yf))
     if 'affine_xy2vs' in config:
       affine_input = list_to_affine(config['affine_xy2vs'])
       print("Input affine matrix to stage is %s." % (affine_to_str(affine_input)))
@@ -106,24 +101,13 @@ HISTORY
       image_rect_on_stage = transform_points(image_rect_coord, affine_input)
       affine_image2stage = get_affine_matrix(image_rect, image_rect_on_stage)
       print("%s %dx%d pix was calibrated based on %s. It's affine matrix to stage is %s." % (os.path.basename(image_path), original_width, original_height, os.path.basename(default_yfile_name), affine_to_str(affine_input)))
-
   else:
-    interactive = True
-    if interactive:
-      anchors_on_image = win.get_anchor_on_image()
-      anchors_on_stage = win.get_anchor_on_stage()
-    else:
-    # for debug
-    # anchors_on_image = [[5678, 778], [3900, 4800], [1194, 474]]
-    # anchors_on_stage = [[4283.148, 2357.953], [2020.386, -3105.960], [-1790.444, 2593.054]]
-      anchors_on_image = [[0, 0], [640, 960], [1280, 0]]
-      anchors_on_stage = [[-76.0,-11715.0], [-676.0,-10815.0], [-1276.0,-11715.0]]
+    anchors_on_image = gui.get_anchor_on_image()
+    anchors_on_stage = gui.get_anchor_on_stage()
 
-    win.set_anchors(anchors_on_image)
-  # win.active_point_index = 0
-    win.draw_points(win.temp)
-  # center = [float(original_width)/2, float(original_height)/2]
-  # win.draw_point(win.temp, tuple([int(round(x * win.r_view)) for x in center]), (0,255,0))
+    gui.set_anchors(anchors_on_image)
+    gui.draw_points(gui.temp)
+  
     anchors_on_image_coord = [image_pixel_to_coord(p, original_width, original_height) for p in anchors_on_image]
     print("#\tx(pix)\ty(pix)\tx(um)\ty(um)")
     for idx in range(len(anchors_on_image)):
@@ -135,14 +119,11 @@ HISTORY
     f = open(default_yfile_path, 'w')
     yaml.dump({'affine_xy2vs': affine_to_list(affine_for_output) }, f, encoding='utf8', allow_unicode=True)
     print("%s %dx%d pix was calibrated. It's affine matrix to stage was %s." % (os.path.basename(image_path), original_width, original_height, affine_to_str(affine_for_output)))
-    cv2.imshow(win.window_name, win.temp)
 
-  win_view = Stage(image_path, default_ofile_name)
+  win_view = Stage()
+  win_view.set_image(image_path, affine_image2stage)
 
-  #win_view.set_stage_geometry(x_range = [-1500, 1500], y_range = [-1500, 1500], pixel_per_um = 1.0)
-  win_view.warp_image(affine_image2stage, [500, 500], False)
-
-  win_view.save_output(default_ofile_path)
+  cv2.imwrite(default_ofile_path, win_view.output_image)
 
   warped_rect_coord = [image_pixel_to_coord(p, win_view.output_size[0], win_view.output_size[1]) for p in win_view.output_rect]
   affine_warped = get_affine_matrix(warped_rect_coord[0:3], win_view.output_rect_on_stage[0:3])
@@ -156,8 +137,6 @@ HISTORY
   print("Center:\t(%7d, %7d) dot" % (0, 0))
   print("Size:\t(%7.3f, %7.3f) um" % (win_view.stage_width, win_view.stage_height))
 
-  if os.path.isfile(default_yfile_name) != True:
-    show_images([win, win_view])
-
+  show_image(default_ofile_name, cv2.imread(default_ofile_path))
 if __name__ == '__main__':
   main()

@@ -2,15 +2,10 @@ import cv2
 from image_mosaic.opencv_util import *
 
 class Stage:
-  def __init__(self, image_path, title):
-    self.image_path = image_path
-    #self.original_image = cv.LoadImage(image_path)
-    self.original_image = cv2.imread(image_path)
-
-    self.window_name = title
-
-  def open_window(self):
-    cv2.NamedWindow(self.window_name)
+  def __init__(self):    
+    #self.image_path = image_path
+    #self.original_image = cv2.imread(image_path)
+    pass
 
   def set_stage_geometry(self, x_range, y_range):
     self.min_stage_x = x_range[0]
@@ -79,24 +74,10 @@ class Stage:
     self.output_size = tuple(output_image_width_height)
     self.output_pixels_per_um = float(output_image_width_height[0]) / self.stage_width
 
+  def set_image(self, image_path, affine, verbose = False):
+    self.image_path = image_path
+    self.original_image = cv2.imread(image_path)
 
-  def resize_image(self, pixels_per_um, verbose = False):
-    self.output_pixels_per_um = pixels_per_um
-    resize = tuple([int(math.ceil(float(self.stage_width) * pixels_per_um)), int(math.ceil(float(self.stage_height) * pixels_per_um))])
-    rshape = list(self.output_image.shape)
-    rshape[0] = resize[0]
-    rshape[1] = resize[1]
-    #self.resized_image = cv.CreateImage(resize, self.original_image.depth, self.original_image.channels)
-    #cv.Resize(self.output_image, self.resized_image)
-    self.resized_image = cv2.resize(self.output_image, resize)
-    if verbose:
-      print("resize_image")
-      print("original pixels_per_um: %.3f" % (self.original_pixels_per_um))
-      print("output image: %dx%d (%.3f)" % (self.output_size[0], self.output_size[1], float(self.output_size[0])/self.output_size[1]))
-      print("output pixels_per_um: %.3f" % (self.output_pixels_per_um))
-
-
-  def warp_image(self, affine, view_geometry, verbose = False):
     height, width, channels = self.original_image.shape
     image_aspect = float(width) / height
     self.image_aspect = image_aspect
@@ -114,7 +95,6 @@ class Stage:
 
     if hasattr(self, 'output_size') != True:
       self.set_output_size_from_aspect()
-
 
     if verbose:
       print("image_rect_on_stage:", image_rect_on_stage)
@@ -165,71 +145,6 @@ class Stage:
       pos = [(int(t[0]), int(t[1])) for t in image_rect_on_output]
       cv2.polylines( self.output_image, numpy.int32([numpy.array(pos)]), True, (0,255,0), 10, 8)
 
-    r_w = float(view_geometry[0]) / self.output_image.shape[0]
-    r_h = float(view_geometry[1]) / self.output_image.shape[1]
-    r_view = r_w
-    if r_w > r_h:
-      r_view = r_h
-    self.view_size = (int(self.output_image.shape[0] * r_view), int(self.output_image.shape[1] * r_view))
-    #self.temp = cv.CreateImage(self.view_size, self.original_image.depth, self.original_image.channels)
-    #cv.Resize(self.output_image, self.temp)
-    self.temp = cv2.resize(self.output_image, self.view_size)
-
-  def rectangle(self, pt1, pt2, color, thickness=1, lineType=8, shift=0):
-    cv.Rectangle(self.output_image, pt1, pt2, color, thickness, lineType, shift)
-
-  def rectangle_on_stage(self, pt1, pt2, color, thickness=1, lineType=8, shift=0):
-    points_on_stage = [pt1, pt2]
-    points_on_output = transform_points(points_on_stage, self.affine_stage2output)
-    print(points_on_output)
-    pos = [(int(t[0]), int(t[1])) for t in points_on_output]
-    cv.Rectangle(self.output_image, pos[0], pos[1], color, thickness, lineType, shift)
-
-  def draw_point_on_stage(self, pt1, color, thickness=1, size=10):
-    point_on_stage = pt1
-    point_on_output = transform_points([point_on_stage], self.affine_stage2output)[0]
-    self.draw_point(tuple([int(round(x)) for x in point_on_output]), color, thickness, size)
-
-  def draw_point(self, pt, color, thickness=10, size=10):
-    radius = int(size * 1.0)
-    l = int(size * 2.0)
-    cv.Circle(self.output_image, pt, radius, color, thickness)
-    cv.Line(self.output_image, (pt[0] - l, pt[1]), (pt[0] + l, pt[1]), color, thickness)
-    cv.Line(self.output_image, (pt[0], pt[1] - l), (pt[0], pt[1] + l), color, thickness)
-    self.temp = cv.CreateImage(self.view_size, self.original_image.depth, self.original_image.channels)
-    cv.Resize(self.output_image, self.temp)
-
-  def warp_image_and_place(self, affine, center, width, height, view_geometry):
-    image_rect = [(0,0),(self.original_image.width,0),(self.original_image.width,self.original_image.height),(0,self.original_image.height)]
-    image_rect_on_stage = transform_points(image_rect, affine)
-    view_rect = [(0,0),(width,0),(width,height),(0,height)]
-    view_rect_on_stage = [(center[0] - width / 2, center[1] + height / 2),(center[0] + width / 2, center[1] + height / 2),(center[0] + width / 2, center[1] - height / 2),(center[0] - width / 2, center[1] - height / 2)]
-    affine_stage2view = get_affine_matrix(view_rect_on_stage[0:3], view_rect[0:3])
-    image_rect_on_view = transform_points(image_rect_on_stage, affine_stage2view)
-    affine_image2view = get_affine_matrix(image_rect[0:3], image_rect_on_view[0:3])
-
-    self.view_image = cv.CreateImage((width, height), self.original_image.depth, self.original_image.channels)
-
-    self.image_rect = image_rect
-    self.image_rect_on_stage = image_rect_on_stage
-    self.view_rect = view_rect
-    self.view_rect_on_stage = view_rect_on_stage
-    self.image_rect_on_view = image_rect_on_view
-
-    cv.SetImageROI(self.view_image, (0, 0, self.original_image.width, self.original_image.height))
-    cv.Add(self.view_image, self.original_image,  self.view_image)
-    cv.ResetImageROI(self.view_image)
-    cv.WarpAffine(self.view_image, self.view_image, affine_image2view)
-
-    r_w = float(view_geometry[0]) / self.view_image.width
-    r_h = float(view_geometry[1]) / self.view_image.height
-    r_view = r_w
-    if r_w > r_h:
-      r_view = r_h
-    self.view_size = (int(self.view_image.width * r_view), int(self.view_image.height * r_view))
-    self.temp = cv.CreateImage(self.view_size, self.original_image.depth, self.original_image.channels)
-    cv.Resize(self.view_image, self.temp)
-
   def draw_scale_bar(self):
     length_on_stage = 10**(round(math.log10(self.stage_width)) - 1)
     color = (255, 255, 255)
@@ -240,21 +155,20 @@ class Stage:
     length_on_output = abs(points_on_output[1][0] - points_on_output[0][0])
 
     start = (offset[0], self.output_image.shape[1] - offset[1])
-    #cv.Rectangle(self.output_image, start, (start[0] + int(length_on_output), start[1] + int(length_on_output/50)), color, -1)
-    #self.temp = cv.CreateImage(self.view_size, self.original_image.depth, self.original_image.channels)
     cv2.rectangle(self.output_image, start, (start[0] + int(length_on_output), start[1] + int(length_on_output/50)), color, -1)
-    #cv.Resize(self.output_image, self.temp)
     cv2.resize(self.output_image, self.view_size)
 
-  def resize_and_save(self, filepath, pixels_per_um):
-    self.save_size = (int(self.view_image.width * pixels_per_um), int(self.view_image.height * pixels_per_um))
-    save_image = cv.CreateImage(self.save_size, self.view_image.depth, self.view_image.channels)
-    cv.Resize(self.view_image, save_image)
-    cv.SaveImage(filepath, save_image)
-  def save_output(self, filepath):
-    #cv.SaveImage(filepath, self.output_image)
-    cv2.imwrite(filepath, self.output_image)
-
-  def save_resized(self, filepath):
-    #cv.SaveImage(filepath, self.resized_image)
-    cv2.imwrite(filepath, self.resized_image)
+  def resize_image(self, pixels_per_um, verbose = False):
+    self.output_pixels_per_um = pixels_per_um
+    resize = tuple([int(math.ceil(float(self.stage_width) * pixels_per_um)), int(math.ceil(float(self.stage_height) * pixels_per_um))])
+    rshape = list(self.output_image.shape)
+    rshape[0] = resize[0]
+    rshape[1] = resize[1]
+    #self.resized_image = cv.CreateImage(resize, self.original_image.depth, self.original_image.channels)
+    #cv.Resize(self.output_image, self.resized_image)
+    self.resized_image = cv2.resize(self.output_image, resize)
+    if verbose:
+      print("resize_image")
+      print("original pixels_per_um: %.3f" % (self.original_pixels_per_um))
+      print("output image: %dx%d (%.3f)" % (self.output_size[0], self.output_size[1], float(self.output_size[0])/self.output_size[1]))
+      print("output pixels_per_um: %.3f" % (self.output_pixels_per_um))

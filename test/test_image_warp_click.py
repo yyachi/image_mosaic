@@ -22,11 +22,6 @@ def teardown():
   sys.argv = saved
 
 @with_setup(setup, teardown)
-def test_get_anchor_on_stage():
-  shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
-  sys.argv = ['image_warp_click','tmp/cat.jpg']
-
-@with_setup(setup, teardown)
 def test_main():
   shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
   sys.argv = ['image_warp_click','tmp/cat.jpg']
@@ -41,8 +36,8 @@ def test_main():
   mock_get_anchor_on_stage.return_value = anchor_on_stage
   gui.get_anchor_on_stage = mock_get_anchor_on_stage
 
-  with patch('image_mosaic.image_warp_click.get_image_window') as mock:
+  with patch('image_mosaic.image_warp_click.get_gui') as mock:
     mock.return_value = gui
-    with patch('image_mosaic.image_warp_click.show_images')  as mock2:
+    with patch('image_mosaic.image_warp_click.show_image')  as mock2:
       mock2.return_value = None
       main()

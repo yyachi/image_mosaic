@@ -58,20 +58,20 @@ HISTORY
   May 27, 2015: TK adds documentation
 """)
   parser.add_option("-o", "--out", type="string", dest="output_file_path",
-            help="name of image-of-VS to be exported", metavar="OUT_PATH")
+    help="name of image-of-VS to be exported", metavar="OUT_PATH")
   parser.add_option("-r", "--range", type="float", nargs=4, dest="stage_range",
-            help="area of VS space to be exported as image-of-VS (in micron)", metavar="X_MIN X_MAX Y_MIN Y_MAX")
+    help="area of VS space to be exported as image-of-VS (in micron)", metavar="X_MIN X_MAX Y_MIN Y_MAX")
   parser.add_option("-d", "--density", type="float", dest="pixels_per_um",
-            help="resolution of image-of-VS after exported", metavar="PIXEL_PER_MICRON")
+    help="resolution of image-of-VS after exported", metavar="PIXEL_PER_MICRON")
   parser.add_option("-s", "--scale", dest="with_scale",
-            action="store_true")
+    action="store_true")
+  parser.add_option("-w", "--windows", help="show image-of-VS after exported",
+    action="store_true", dest="flag_window")
   parser.add_option("-v", "--verbose",
-                    action="store_true", dest="verbose")
+    action="store_true", dest="verbose")
   parser.add_option("-q", "--quiet",
-                    action="store_false", dest="verbose")
-  parser.add_option("-w", "--windows",
-                    action="store_true", dest="flag_window")
-
+    action="store_false", dest="verbose")
+  
   (options, args) = parser.parse_args()
   x_range = None
   y_range = None
@@ -133,20 +133,20 @@ HISTORY
   else:
     raise RuntimeError("%s is not found." % default_yfile_path)
 
-  win_view = Stage(image_path, default_ofile_name)
+  win_view = Stage()
   if x_range != None and y_range != None:
     win_view.set_stage_geometry(x_range = x_range, y_range = y_range)
 
-  win_view.warp_image(affine_image2stage, [500, 500], False)
+  win_view.set_image(image_path, affine_image2stage)
 
   if options.with_scale:
     win_view.draw_scale_bar()
 
   if options.pixels_per_um:
-    win_view.resize_image(pixels_per_um,False)
-    win_view.save_resized(default_ofile_path)
+    win_view.resize_image(pixels_per_um, False)
+    cv2.imwrite(default_ofile_path, win_view.resized_image)
   else:
-    win_view.save_output(default_ofile_path)
+    cv2.imwrite(default_ofile_path, win_view.output_image)
 
   warped_rect_coord = [image_pixel_to_coord(p, win_view.output_size[0], win_view.output_size[1]) for p in win_view.output_rect]
   affine_warped = get_affine_matrix(warped_rect_coord[0:3], win_view.output_rect_on_stage[0:3])
@@ -165,7 +165,6 @@ HISTORY
 
   if options.flag_window:
     print("activate %s window and type escape to terminate." % (win_view.window_name))
-
     while True:
       cv2.imshow(win_view.window_name, win_view.temp)
       if cv2.waitKey(15) == 27: break

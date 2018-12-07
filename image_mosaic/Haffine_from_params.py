@@ -6,7 +6,6 @@ import numpy
 import yaml
 import cv2
 from optparse import OptionParser
-#sys.path.append(os.path.join(os.path.dirname(__file__),'../lib'))
 from image_mosaic.opencv_util import *
 
 def main():
@@ -37,13 +36,13 @@ HISTORY
 ''')
   parser = OptionParser(usage)
   parser.add_option("-a", "--angle", type="float", default =0.0, dest="angle",
-            help="0 <= angle < 360 [default: %default]", metavar="ANGLE")   
+    help="0 <= angle < 360 [default: %default]", metavar="ANGLE")   
   parser.add_option("-s", "--scale", type="float", default =1.0, dest="scale",
-            help="0 < scale <= 1.0 [default: %default]", metavar="SCALE") 
+    help="0 < scale <= 1.0 [default: %default]", metavar="SCALE") 
   parser.add_option("-c", "--center", type="string", dest="center",
-            help="center of rotation", metavar="CENTER")    
+    help="center of rotation", metavar="CENTER")    
   parser.add_option("-f", "--output-format", type="choice", default ='text', choices = ['text', 'yaml'], dest="output_format",
-            help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
+    help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
 
   (options, args) = parser.parse_args()
 

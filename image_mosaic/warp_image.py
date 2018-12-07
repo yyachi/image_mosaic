@@ -6,7 +6,6 @@ import numpy
 import yaml
 import cv2
 from optparse import OptionParser
-#sys.path.append(os.path.join(os.path.dirname(__file__),'../lib'))
 from image_mosaic.opencv_util import *
 
 def main():
@@ -43,25 +42,25 @@ HISTORY
 ''')
   parser = OptionParser(usage)
   parser.add_option("-o", "--output-file", type="string", dest="output_path",
-            help="output file", metavar="OUTPUT_FILE")
+    help="output file", metavar="OUTPUT_FILE")
   parser.add_option("-b", "--background-image", type="string", dest="bg_image",
-            help="background image file", metavar="BG_IMAGE") 
+    help="background image file", metavar="BG_IMAGE") 
   parser.add_option("-g", "--geometry", type="string", dest="geometry",
-            help="geometry of output [default: same as input image]", metavar="GEOMETRY")
+    help="geometry of output [default: same as input image]", metavar="GEOMETRY")
   parser.add_option("-a", "--angle", type="float", default =0.0, dest="angle",
-            help="0 <= angle < 360 [default: %default]", metavar="ANGLE")   
+    help="0 <= angle < 360 [default: %default]", metavar="ANGLE")   
   parser.add_option("-s", "--scale", type="float", default =1.0, dest="scale",
-            help="0 < scale <= 1.0 [default: %default]", metavar="SCALE") 
+    help="0 < scale <= 1.0 [default: %default]", metavar="SCALE") 
   parser.add_option("-c", "--center", type="string", dest="center",
-            help="center of rotation", metavar="CENTER")
+    help="center of rotation", metavar="CENTER")
   parser.add_option("-t", "--offset", type="string", dest="offset",
-            help="offset vector", metavar="SHIFT")    
+    help="offset vector", metavar="SHIFT")    
   parser.add_option("-m", "--matrix", type='string', dest="matrix",
-            help="affine matrix: [[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0]]")
+    help="affine matrix: [[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0]]")
   parser.add_option("-n", "--corners", type='string', dest="corner_points",
-            help="corner points on destination [upper_left,upper_right,lower_right,lower_left]: [[55,675],[277,677],[281,826],[52,826]]")                 
+    help="corner points on destination [upper_left,upper_right,lower_right,lower_left]: [[55,675],[277,677],[281,826],[52,826]]")                 
   parser.add_option("-f", "--output-format", type="choice", default ='text', choices = ['text', 'yaml'], dest="output_format",
-            help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
+    help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
 
   (options, args) = parser.parse_args()
 
@@ -127,11 +126,7 @@ HISTORY
       (thresh, mask) = cv2.threshold(img_gray, 1, 255, cv2.THRESH_BINARY_INV)
       img2 = cv2.warpPerspective(img, h, output_geometry)
       cv2.add(bg_img, img2, img2, mask)
-  # cv2.imshow('image', img2)
-  # cv2.waitKey(0)
-
   cv2.imwrite(output_path, img2)
-
 
 if __name__ == '__main__':
   main()  

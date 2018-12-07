@@ -42,3 +42,11 @@ def test_main_with_affine_xy2vs():
   sys.argv = ['image_warp','tmp/cat.jpg']
   #sys.argv = ['image_warp','tmp/cat.jpg', '-s','-r', '-50', '50', '-38.45', '38.45', '-d', '10.24']
   main()
+
+@with_setup(setup, teardown)
+def test_with_window():
+  shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
+  shutil.copy(os.path.join(files_dir, 'cat.geo_with_affine'),'tmp/cat.geo')  
+  sys.argv = ['image_warp','tmp/cat.jpg']
+  #sys.argv = ['image_warp','tmp/cat.jpg', '-s','-r', '-50', '50', '-38.45', '38.45', '-d', '10.24']
+  main()  

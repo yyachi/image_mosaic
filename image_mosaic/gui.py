@@ -73,17 +73,13 @@ class Gui:
       self.draw_points(self.temp)
       self.drawing = False
 
-#     print self.points
   def draw_points(self, image):
     for i in range(len(self.points)):
       point = self.points[i]
       if self.active_point_index == i:
-#       print "active", i
         self.draw_point(image, point, (0, 0, 255))
       else:
-#       print "normal", i
         self.draw_point(image, point, (255, 0, 0))
-      #print point
 
 
   def draw_point(self, image, pt, color):
@@ -97,7 +93,6 @@ class Gui:
 
 
   def draw_cross(self, image, pt):
-#   print "cross lines drawing..."
     cv2.line(image, (0, pt[1]), (self.original_image.shape[0] - 1, pt[1]), (255,255,255))
     cv2.line(image, (pt[0], 0), (pt[0], self.original_image.shape[1] - 1), (255,255,255))
 

@@ -39,7 +39,7 @@ HISTORY
 ''')
   parser = OptionParser(usage)
   parser.add_option("-f", "--output-format", type="choice", default ='text', choices = ['text', 'yaml'], dest="output_format",
-            help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
+    help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
 
   (options, args) = parser.parse_args()
   if len(args) != 2:

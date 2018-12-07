@@ -23,4 +23,5 @@ def teardown():
 @with_setup(setup, teardown)
 def test_main():
   shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
-  stage = Stage('tmp/cat.jpg', 'tmp/out.jpg')
+  stage = Stage()
+  stage.set_image('tmp/cat.jpg', numpy.array([[1,0,0],[0,1,0],[0,0,1]]))

@@ -35,14 +35,14 @@ HISTORY
 ''')
   parser = OptionParser(usage)
   parser.add_option("-o", "--output-file", type="string", dest="output_path",
-            help="output file", metavar="OUTPUT_FILE")
+    help="output file", metavar="OUTPUT_FILE")
   parser.add_option("-g", "--geometry", type="string", dest="geometry",
-            help="cut out a rectangular region of the image: 1280x640+10+10", metavar="GEOMETRY")
+    help="cut out a rectangular region of the image: 1280x640+10+10", metavar="GEOMETRY")
 
   (options, args) = parser.parse_args()
 
   if len(args) != 1:
-       parser.error("incorrect number of arguments")
+    parser.error("incorrect number of arguments")
 
   image_path = args[0]
 

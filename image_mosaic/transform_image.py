@@ -37,22 +37,22 @@ HISTORY
 ''')
   parser = OptionParser(usage)
   parser.add_option("-o", "--output-file", type="string", dest="output_path",
-            help="output file", metavar="OUTPUT_FILE")
+    help="output file", metavar="OUTPUT_FILE")
   parser.add_option("-a", "--angle", type="float", default =0.0, dest="angle",
-            help="0 <= angle < 360 [default: %default]", metavar="ANGLE")   
+    help="0 <= angle < 360 [default: %default]", metavar="ANGLE")   
   parser.add_option("-s", "--scale", type="float", default =1.0, dest="scale",
-            help="0 < scale <= 1.0 [default: %default]", metavar="SCALE") 
+    help="0 < scale <= 1.0 [default: %default]", metavar="SCALE") 
   parser.add_option("-c", "--center", type="string", dest="center",
-            help="center of rotation", metavar="CENTER")
+    help="center of rotation", metavar="CENTER")
   parser.add_option("-m", "--matrix", type='string', dest="matrix",
-            help="affine matrix: [[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0]]")              
+    help="affine matrix: [[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0]]")              
   parser.add_option("-f", "--output-format", type="choice", default ='text', choices = ['text', 'yaml'], dest="output_format",
-            help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
+    help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
 
   (options, args) = parser.parse_args()
 
   if len(args) != 1:
-       parser.error("incorrect number of arguments")
+    parser.error("incorrect number of arguments")
 
   image_path = args[0]
   root, ext = os.path.splitext(image_path)
@@ -81,9 +81,6 @@ HISTORY
       center = str2array(options.center)
     h = cv2.getRotationMatrix2D(tuple(center), angle, scale)
     img2 = cv2.warpAffine(img, h, (width, height))
-
-  # cv2.imshow('image', img2)
-  # cv2.waitKey(0)
 
   cv2.imwrite(output_path, img2)
 

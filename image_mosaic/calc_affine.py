@@ -53,11 +53,11 @@ HISTORY
   May 24, 2015: TK adds documentation
 """)
   parser.add_option("-v", "--verbose",
-                  action="store_true", dest="verbose", default=False,
-                  help="make lots of noise")
+    action="store_true", dest="verbose", default=False,
+    help="make lots of noise")
   parser.add_option("-y", "--yes",
-                  action="store_true", dest="answer_yes", default=False,
-                  help="answer yes for all questions")
+    action="store_true", dest="answer_yes", default=False,
+    help="answer yes for all questions")
 
   (options, args) = parser.parse_args()
 

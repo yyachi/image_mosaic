@@ -4,7 +4,7 @@ import sys
 import textwrap
 import numpy
 import yaml
-import scipy
+#import scipy
 import cv2
 from optparse import OptionParser
 #from opencv_util import *
@@ -63,7 +63,6 @@ HISTORY
 
   if options.output_path != None:
     output_path = options.output_path
-
   
   tp = numpy.array([[p[1] for p in corner_points], [p[0] for p in corner_points], [1.0 for p in corner_points] ])
 
@@ -95,8 +94,6 @@ HISTORY
   cv2.add(img2, img3, img3, mask)
 
   cv2.imwrite(output_path, img3)
-  # cv2.imshow('image', img3)
-  # cv2.waitKey(0)  
 
 if __name__ == '__main__':
   main()
