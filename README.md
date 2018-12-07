@@ -12,7 +12,7 @@ See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okay
 
 # Dependency
 
-## [OpenCV](https://opencv.org/releases.html)
+## [OpenCV 3](https://opencv.org/releases.html)
 
 # Installation
 
