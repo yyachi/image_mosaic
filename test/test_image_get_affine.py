@@ -2,7 +2,7 @@ import sys
 import os
 import shutil
 from nose.tools import *
-from image_mosaic.calc_affine import *
+from image_mosaic.image_get_affine import *
 
 
 files_dir = os.path.join(os.path.dirname(__file__), 'files')

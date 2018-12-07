@@ -7,7 +7,7 @@ with open('README.md') as f:
 with open('LICENSE') as f:
     license = f.read()
 
-version = '0.1.8'
+version = '0.1.9'
 
 setup(name='image_mosaic',
       version=version,
@@ -43,7 +43,7 @@ setup(name='image_mosaic',
                   "image-warp-clicks = image_mosaic.image_warp_click:main",                  
                   "image-warp = image_mosaic.image_warp:main",
                   "blend-image = image_mosaic.blend_image:main",
-                  "image-get-affine = image_mosaic.calc_affine:main"              
+                  "image-get-affine = image_mosaic.image_get_affine:main"              
             ]
             },
       )
