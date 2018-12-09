@@ -62,9 +62,7 @@ Install OpenCV into Anaconda.
 
 Install scipy into Anaconda.
 
-    $ conda install scipy
-    $ conda list | grep scipy
-    scipy                     1.1.0            py36h1a1e112_1  
+    $ conda install pyyaml numpy pillow
 
 Install this package.
 
