@@ -60,7 +60,7 @@ Install OpenCV into Anaconda.
     $ conda list | grep opencv
     opencv                    3.4.1           py36_blas_openblash553dce0_201    conda-forge
 
-Install scipy into Anaconda.
+Install numpy, PyYAML, and Pillow into Anaconda.
 
     $ conda install pyyaml numpy pillow
 
