@@ -43,7 +43,7 @@ Successful installation is confirmed by:
     CMD> image-warp --help
 
 ## macOS
-Download and install the [Anaconda (a distribution of Python for data science).](https://www.anaconda.com/)
+Download and install [Anaconda (a distribution of Python for data science).](https://www.anaconda.com/)
 
     $ cd ~/Downloads/
     $ wget https://repo.anaconda.com/archive/Anaconda3-5.3.1-MacOSX-x86_64.pkg
