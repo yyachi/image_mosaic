@@ -15,7 +15,7 @@ DESCRIPTION
   to imagefile0.  Specify where to locate imagefile1 by (x, y) of
   imagefile0 and dimension of imagefile1 by (width, height).  Rotate
   and distort imagefile1 in advance using `image-warp'.  Specify alpha
-  and beta as option.
+  and beta by 7th and 8th arguments.
 
 EXAMPLE
   $ ls
