@@ -35,7 +35,7 @@ or as:
     $ wget https://github.com/misasa/image_mosaic/archive/master.zip
     ADMIN.CMD> cd %USERPROFILE%\Downloads\
     ADMIN.CMD> pip list
-    ADMIN.CMD> pip uninstall opencvtool
+    ADMIN.CMD> pip uninstall image-mosaic
     ADMIN.CMD> pip install master.zip
 
 Successful installation is confirmed by:
