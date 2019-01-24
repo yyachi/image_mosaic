@@ -22,7 +22,7 @@ DESCRIPTION
 EXAMPLE
   $ ls
   mywall.jpg  raman.jpg  raman_.jpg
-  $ %prog mywall.jpg raman_.jpg 0 0 1024 788 0.6 0.4
+  $ %prog mywall.jpg raman_.jpg 0 0 1024 788 0.4 0.6
 
 SEE ALSO
   image-warp
@@ -30,7 +30,7 @@ SEE ALSO
 
 IMPLEMENTATION
   Orochi, version 9
-  Copyright (C) 2014 Okayama University
+  Copyright (C) 2014-2019 Okayama University
   License GPLv3+: GNU GPL version 3 or later
 
 HISTORY
