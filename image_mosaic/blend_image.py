@@ -17,10 +17,12 @@ DESCRIPTION
   and distort imagefile1 in advance using `image-warp'.  Specify alpha
   and beta by 7th and 8th arguments.
 
+  Typically, beta = 1 - alpha.
+
 EXAMPLE
   $ ls
   mywall.jpg  raman.jpg  raman_.jpg
-  $ %prog mywall.jpg raman_.jpg 0 0 1024 788 0.5 0.5
+  $ %prog mywall.jpg raman_.jpg 0 0 1024 788 0.6 0.4
 
 SEE ALSO
   image-warp
