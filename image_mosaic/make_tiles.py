@@ -5,6 +5,30 @@ import textwrap
 import numpy
 from PIL import Image, ImageChops
 from optparse import OptionParser
+import math
+
+def tile_ij_at(zoom, x, y, length, center, tilesize = 256):
+  left = center[0] - length/2
+  upper = center[1] + length/2
+  dx = x - left
+  dy = upper - y
+  n = 2**zoom
+  pix = tilesize * n
+  lpp = length/float(pix)
+  ii = dx/(lpp * tilesize)
+  jj = dy/(lpp * tilesize)
+  i = int(math.floor(ii))
+  if (i < 0):
+    i = 0
+  elif (i > (n - 1)):
+    i = n - 1
+
+  j = int(math.floor(jj))
+  if (j < 0):
+    j = 0
+  elif (j > (n - 1)):
+    j = n - 1
+  return (i,j)
 
 def make_tiles(zoom, img, dirname, options):
   dirname = os.path.join(dirname,str(zoom))
@@ -26,9 +50,10 @@ def make_tiles(zoom, img, dirname, options):
   #print pix
   #print length_per_pix
   #print dum
-
-  for i in range(n):
-    for j in range(n):
+  min_i, min_j = tile_ij_at(zoom, ibox[0], ibox[1], length, options.center)
+  max_i, max_j = tile_ij_at(zoom, ibox[2], ibox[3], length, options.center)
+  for i in range(min_i, max_i + 1):
+    for j in range(min_j, max_j + 1):
       #tile_path = os.path.join(dirname,"%d-%d.png",i,j)
       tile_path = os.path.join(dirname,"%d_%d.png" % (i,j))
       tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
@@ -90,7 +115,6 @@ def box_r(ibox, box):
   return l
 
 def main():
-  #print "hello world"
   usage = textwrap.dedent('''\
  %prog image_path bounds([left,upper,right,bottom]) length center([x,y]) 
 
@@ -135,8 +159,12 @@ HISTORY
               help="tile size", metavar="TILESIZE", default=256)
   parser.add_option("-t", "--transparent", action="store_true", dest="transparent",
               help="transparent", metavar="TRANSPARENT", default=False)
-  parser.add_option("-z", "--maxzoom", type="int", dest="maxzoom",
-              help="max zoom level", metavar="MAXZOOM", default=2)
+  parser.add_option("-i", "--min-zoom-level", type="int", dest="min_zoom_level",
+              help="minimum zoom level", metavar="MINIMUM_ZOOM_LEVEL", default=0)
+  parser.add_option("-z", "--max-zoom-level", type="int", dest="max_zoom_level",
+              help="max zoom level", metavar="MAXIMUM_ZOOM_LEVEL", default=2)
+  parser.add_option("-a", "--zoom-level", type="int", dest="zoom_level",
+              help="zoom level", metavar="ZOOM_LVEL")
   parser.add_option("-o", "--output-dir", type="string", dest="output_dir",
               help="output directory", metavar="OUTPUT_DIR")
 
@@ -154,8 +182,9 @@ HISTORY
   center = eval(args[3])
   options.ibox = bounds
   options.length = length
+  options.center = center
   options.bbox = (center[0] - length/2,center[1] + length/2,center[0] + length/2,center[1] - length/2)
-
+  
   dirname = "./"
   if options.output_dir != None:
     dirname = options.output_dir
@@ -178,9 +207,12 @@ HISTORY
     #image.save(dirname+".png")
     #print img_org
     #print image
-
-    for zoom in range(options.maxzoom + 1):
-      make_tiles(zoom, image, dirname, options)
+    #if options.zoomlevel
+    if options.zoom_level:
+      make_tiles(options.zoom_level, image, dirname, options)
+    else:
+      for zoom in range(options.min_zoom_level, (options.max_zoom_level + 1)):
+        make_tiles(zoom, image, dirname, options)
 
 if __name__ == '__main__':
   main()
