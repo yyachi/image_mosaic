@@ -31,7 +31,7 @@ def test_main():
 	#sys.argv = ['make_tiles', 'tmp/cbk1i_mosaic_warped.png', '[-8051.71,6154.39,7031.91,-4714.39]', '15119.55', '[-509.90,720.00]', '-z', '6', '-o', 'tmp/maps/47761', '-t']
 	#main()
 	shutil.copy(os.path.join(files_dir, 'cbk1i_7256_7274_warped.png'),'tmp')
-	sys.argv = ['make_tiles', 'tmp/cbk1i_7256_7274_warped.png', '[1688.26,1660.90,3961.74,-177.30]', '15119.55', '[-509.90,720.00]', '-z', '6', '-o', 'tmp/maps/47762', '-t']
+	sys.argv = ['make_tiles', 'tmp/cbk1i_7256_7274_warped.png', '[1688.26,1660.90,3961.74,-177.30]', '15119.55', '[-509.90,720.00]', '-z', '6', '-o', 'tmp/maps/47762', '-t', '-d']
 	main()
 
 
