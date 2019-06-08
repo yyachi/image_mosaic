@@ -131,17 +131,17 @@ DESCRIPTION
   specified by center and width. The number of tiles depends on zoom levels. At zoom
   level 0 the squared sub-area is exported as a tile. Resolution of the tile is
   256/width (pixel/micron). With increment of zoom level the number of exporting tiles
-  is multiplied by 2x2. This program generates a series of tiles for zoom level from 0
-  to max. The zoom level max is specified by arguments. The tiles are compatible with
+  is multiplied by 2x2. This program generates a series of tiles for zoom level from min (default 0) to max (default 2). The zoom level min and max are changed by arguments -i and -z, respectively. When the zoom level is specified by the argument -a, this program gerates a series of tiles at the zoom level.  The tiles are compatible with
   Leaflet.js (a Javascript library for interactive maps). The tiles are exported as
   {zoom level}/{x}_{y}.png where x and y correspond to n-th coordinate of tile in horizontal
   and vertical direction. At zoom level 2, 16 tiles are exported as 2/0_0.png, 2/1_0.png,
-  2/2_0.png, ..., and 2/3_3.png with resolution 1024/width (pixel/micron).
+  2/2_0.png, ..., and 2/3_3.png with resolution 1024/width (pixel/micron). 
+    This program replaces a color (default black) with transparent when the arguments -t is specified. The color is specified with the argument -c.
 
 EXAMPLE
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0]
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -z 3 -o maps/cat -t
-
+  > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -a 4 -o maps/cat -t -c 255 255 255
 SEE ALSO
   https://github.com/misasa/image_mosaic
 
@@ -159,6 +159,8 @@ HISTORY
               help="tile size", metavar="TILESIZE", default=256)
   parser.add_option("-t", "--transparent", action="store_true", dest="transparent",
               help="transparent", metavar="TRANSPARENT", default=False)
+  parser.add_option("-c", "--transparent-color", type="int", nargs=3, dest="transparent_color",
+              help="transparent color", metavar="TRANSPARENT_COLOR", default=(0,0,0))
   parser.add_option("-i", "--min-zoom-level", type="int", dest="min_zoom_level",
               help="minimum zoom level", metavar="MINIMUM_ZOOM_LEVEL", default=0)
   parser.add_option("-z", "--max-zoom-level", type="int", dest="max_zoom_level",
@@ -167,7 +169,8 @@ HISTORY
               help="zoom level", metavar="ZOOM_LVEL")
   parser.add_option("-o", "--output-dir", type="string", dest="output_dir",
               help="output directory", metavar="OUTPUT_DIR")
-
+  parser.add_option("-d", "--debug", action="store_true", dest="debug",  
+              help="debug", metavar="DEBUG", default=False)
   (options, args) = parser.parse_args()
 
   if len(args) != 4:
@@ -194,25 +197,27 @@ HISTORY
   img_org = Image.open(image_path)
   rgbimg = img_org.convert('RGB')
   image = rgbimg
+  if options.debug:
+    print(options)
   if options.transparent:
+    src_color = options.transparent_color
     r,g,b = rgbimg.split()
-    _r = r.point(lambda _: 0 if _ == 0 else 1, mode="1")
-    _g = g.point(lambda _: 0 if _ == 0 else 1, mode="1")
-    _b = b.point(lambda _: 0 if _ == 0 else 1, mode="1")
+    _r = r.point(lambda _: 1 if _ == src_color[0] else 0, mode="1")
+    _g = g.point(lambda _: 1 if _ == src_color[1] else 0, mode="1")
+    _b = b.point(lambda _: 1 if _ == src_color[2] else 0, mode="1")
+
     mask = ImageChops.logical_and(_r,_g)
     mask = ImageChops.logical_and(mask, _b)
+    mask_inv = ImageChops.invert(mask)
     rgbtimg = Image.new("RGBA", img_org.size, (0,0,0,0))
-    rgbtimg.paste(rgbimg, mask=mask)
+    rgbtimg.paste(rgbimg, mask=mask_inv)
     image = rgbtimg
-    #image.save(dirname+".png")
-    #print img_org
-    #print image
-    #if options.zoomlevel
-    if options.zoom_level:
-      make_tiles(options.zoom_level, image, dirname, options)
-    else:
-      for zoom in range(options.min_zoom_level, (options.max_zoom_level + 1)):
-        make_tiles(zoom, image, dirname, options)
+
+  if options.zoom_level:
+    make_tiles(options.zoom_level, image, dirname, options)
+  else:
+    for zoom in range(options.min_zoom_level, (options.max_zoom_level + 1)):
+      make_tiles(zoom, image, dirname, options)
 
 if __name__ == '__main__':
   main()
