@@ -18,7 +18,7 @@ See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okay
 
 ## Windows
 
-Download OpenCV for MS Windows, uncompress the archive, and copy a Python library file `CV2.pyd` to local Python directory such for `C:\Python27\Lib\site-packages`.
+Download OpenCV for MS Windows, uncompress the archive, and copy a Python library file `CV2.pyd` to local Python directory such for `C:\Python27\Lib\site-packages\`.
 
     $ cd ~/Downlaods/
     $ wget https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.4.3/opencv-3.4.3-vc14_vc15.exe/download
