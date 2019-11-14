@@ -28,6 +28,7 @@ DESCRIPTION
 
 EXAMPLE
   > %prog --scale 0.6 --center [100,50] --angle=-50.0 imagefile
+  > %prog --scale 0.6 --center [100,50] --angle=-50.0 --interpolation-method nearest imagefile
 
 SEE ALSO
   https://github.com/misasa/image_mosaic
@@ -61,6 +62,8 @@ HISTORY
     help="corner points on destination [upper_left,upper_right,lower_right,lower_left]: [[55,675],[277,677],[281,826],[52,826]]")                 
   parser.add_option("-f", "--output-format", type="choice", default ='text', choices = ['text', 'yaml'], dest="output_format",
     help="output format: 'text' or 'yaml' [default: %default]", metavar="OUTPUT_FORMAT")
+  parser.add_option("-p", "--interpolation-method", type="choice", default ='linear', choices = ['linear', 'nearest'], dest="interpolation_method",
+    help="interpolation method: 'linear' or 'nearest' [default: %default]", metavar="INTERPOLATION_METHOD")
 
   (options, args) = parser.parse_args()
 
@@ -104,13 +107,25 @@ HISTORY
         center = str2array(options.center)
       h = cv2.getRotationMatrix2D(tuple(center), angle, scale)
     h = numpy.append(h, numpy.array([0.0,0.0,1.0])).reshape(3,3)
+  
+  flags = cv2.INTER_LINEAR
+  if options.interpolation_method == 'nearest':
+    flags = cv2.INTER_NEAREST
+  elif options.interpolation_method == 'area':
+    flags = cv2.INTER_AREA
+  elif options.interpolation_method == 'cubic':
+    flags = cv2.INTER_CUBIC
+  elif options.interpolation_method == 'lanczos4':
+    flags = cv2.INTER_LANCZOS4
+
 
 
   if options.bg_image == None:
     output_geometry = (width, height)
     if options.geometry != None:
       output_geometry = tuple(list(str2array(options.geometry)))
-    img2 = cv2.warpPerspective(img, h, output_geometry) 
+    #img2 = cv2.warpPerspective(img, h, output_geometry)
+    img2 = cv2.warpPerspective(img, h, output_geometry, flags=flags) 
   else: 
     if os.path.exists(options.bg_image) == False:
       parser.error("%s does not exist" % options.bg_image)
@@ -121,10 +136,10 @@ HISTORY
       output_geometry = (bg_width, bg_height)
 
       img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-      img_gray = cv2.warpPerspective(img_gray, h, output_geometry)
+      img_gray = cv2.warpPerspective(img_gray, h, output_geometry, flags=flags)
       img_gray = cv2.add(img_gray, 1)
       (thresh, mask) = cv2.threshold(img_gray, 1, 255, cv2.THRESH_BINARY_INV)
-      img2 = cv2.warpPerspective(img, h, output_geometry)
+      img2 = cv2.warpPerspective(img, h, output_geometry, flags=flags)
       cv2.add(bg_img, img2, img2, mask)
   cv2.imwrite(output_path, img2)
 

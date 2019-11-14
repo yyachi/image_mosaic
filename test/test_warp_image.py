@@ -24,7 +24,13 @@ def teardown():
 def test_main():
   # > %prog --scale 0.6 --center [100,50] --angle=-50.0 imagefile''')
   shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
-  sys.argv = ['warp_image', '--scale', '0.6', '--center', '[100,50]' ,'--angle', '-50.0','tmp/cat.jpg', '-o', 'tmp/cat_warped.jpg']
+  sys.argv = ['warp_image', '--scale', '2.0', '--center', '[100,50]' ,'--angle', '-50.0','tmp/cat.jpg', '-o', 'tmp/cat_warped.jpg']
+  main()
+
+def test_interpolation_nearest():
+  # > %prog --scale 0.6 --center [100,50] --angle=-50.0 imagefile''')
+  shutil.copy(os.path.join(files_dir, 'cat.jpg'),'tmp')
+  sys.argv = ['warp_image', '--scale', '2.0', '--center', '[100,50]' ,'--angle', '-50.0','tmp/cat.jpg', '-o', 'tmp/cat_warped_with_nearest.jpg', '--interpolation-method', 'nearest']
   main()
 
 # @with_setup(setup, teardown)
