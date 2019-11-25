@@ -7,7 +7,7 @@ with open('README.md') as f:
 with open('LICENSE') as f:
     license = f.read()
 
-version = '0.1.2'
+version = '0.1.3'
 
 setup(name='image_mosaic',
       version=version,
@@ -26,6 +26,7 @@ setup(name='image_mosaic',
             "PyYAML",
             "numpy",
             "Pillow",
+            "opencv-python",
           # -*- Extra requirements: -*-
       ],
       entry_points={
