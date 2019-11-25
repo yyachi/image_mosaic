@@ -12,13 +12,13 @@ See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okay
 
 # Dependency
 
-## [OpenCV 3 OR 4](https://opencv.org/releases.html)
+## [OpenCV](https://opencv.org/releases.html)  3 or 4
 
 # Installation
 
 ## Windows
 
-Install opencv-python.
+Install a Python package `opencv-python`.
 
     CMD> py -V
     Python 3.7.2
