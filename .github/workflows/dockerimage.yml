@@ -11,3 +11,4 @@ jobs:
         name: docker.pkg.github.com/misasa/image_mosaic
         username: yyachi
         password: ${{ secrets.GPR_AUTH_TOKEN }}
+        registry: docker.pkg.github.com
