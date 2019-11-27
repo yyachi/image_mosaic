@@ -8,7 +8,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: docker.pkg.github.com/misasa/image_mosaic
+        name: docker.pkg.github.com/misasa/python/image_mosaic
         username: yyachi
         password: ${{ secrets.GPR_AUTH_TOKEN }}
         registry: docker.pkg.github.com
