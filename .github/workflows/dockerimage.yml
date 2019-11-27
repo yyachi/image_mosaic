@@ -10,4 +10,4 @@ jobs:
       with:
         name: docker.pkg.github.com/misasa/image_mosaic
         username: yyachi
-        password: ${{ secrets.GRP_AUTH_TOKEN }}
+        password: ${{ secrets.GPR_AUTH_TOKEN }}
