@@ -10,13 +10,7 @@ See [rails project -- medusa](https://github.com/misasa/medusa) that refers to t
 See [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem) that refers to this package.
 See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage).
 
-# Dependency
-
-## [OpenCV](https://opencv.org/releases.html)  3 or 4
-
 # Installation
-
-## Windows
 
 Install this package as Administrator as:
 
@@ -34,36 +28,6 @@ or as:
 Successful installation is confirmed by:
    
     CMD> image-warp --help
-
-## macOS
-Download and install [Anaconda (a distribution of Python for data science).](https://www.anaconda.com/)
-
-    $ cd ~/Downloads/
-    $ wget https://repo.anaconda.com/archive/Anaconda3-5.3.1-MacOSX-x86_64.pkg
-    $ open Anaconda3-5.3.0-MacOSX-x86_64.pkg
-    $ source ~/.bash_profile
-    $ which python
-    /Users/dream/anaconda3/bin/python
-    $ python -V
-    Python 3.7.0
-    
-Install OpenCV into Anaconda.
-
-    $ conda install -c conda-forge opencv
-    $ conda list | grep opencv
-    opencv                    3.4.1           py36_blas_openblash553dce0_201    conda-forge
-
-Install numpy, PyYAML, and Pillow into Anaconda.
-
-    $ conda install pyyaml numpy pillow
-
-Install this package.
-
-    $ git clone https://github.com/misasa/image_mosaic.git
-    $ cd image_mosaic
-    $ python setup.py install
-    $ conda list | grep image-mosaic
-    image-mosaic              0.1.5                     <pip>
 
 # Commands
 
