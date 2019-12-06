@@ -10,6 +10,12 @@ See [rails project -- medusa](https://github.com/misasa/medusa) that refers to t
 See [rake project -- mosaic-sem](https://gitlab.misasa.okayama-u.ac.jp/DREAM/mosaic-sem) that refers to this package.
 See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okayama-u.ac.jp/gems/multi_stage).
 
+# Dependency
+
+## [Python 3.7 for Windows](https://www.python.org/downloads/windows/)
+
+Include "C:\Python37\;C:\Python37\Scripts\" to %PATH%.
+
 # Installation
 
 Install this package as Administrator as:
