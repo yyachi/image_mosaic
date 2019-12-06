@@ -22,7 +22,7 @@ Install this package as Administrator as:
 
     ADMIN.CMD> pip install git+https://github.com/misasa/image_mosaic.git
 
-or as:
+or download [master.zip](https://github.com/misasa/image_mosaic/archive/master.zip) to a local directory and install it as Administrator as:
 
     $ cd ~/Downloads/
     $ wget https://github.com/misasa/image_mosaic/archive/master.zip
