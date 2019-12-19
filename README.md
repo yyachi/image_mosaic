@@ -14,7 +14,7 @@ See also `spots-warp` in [gem package -- multi_stage](https://gitlab.misasa.okay
 
 ## [Python 3.7 for Windows](https://www.python.org/downloads/windows/)
 
-Include "C:\Python37\;C:\Python37\Scripts\" to %PATH%.
+Include "C:\Program Files\Python37\;C:\Program Files\Python37\Scripts\" to %PATH%.
 
 # Installation
 
