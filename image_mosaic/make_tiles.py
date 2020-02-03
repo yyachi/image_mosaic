@@ -56,7 +56,10 @@ def make_tiles(zoom, img, dirname, options):
     for j in range(min_j, max_j + 1):
       #tile_path = os.path.join(dirname,"%d-%d.png",i,j)
       tile_path = os.path.join(dirname,"%d_%d.png" % (i,j))
-      tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
+      if (os.path.exists(tile_path)) and options.compose:
+        tile = Image.open(tile_path)
+      else:
+        tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
       
       pbox = (tilesize*i, tilesize*j, tilesize*(i+1), tilesize*(j+1))
       zleft = box[0] + dum*i
@@ -137,7 +140,7 @@ DESCRIPTION
   and vertical direction. At zoom level 2, 16 tiles are exported as 2/0_0.png, 2/1_0.png,
   2/2_0.png, ..., and 2/3_3.png with resolution 1024/width (pixel/micron). 
     This program replaces a color (default black) with transparent when the arguments -t is specified. The color is specified with the argument -c.
-
+    This program overlay a tile over the existing tile when the arguments -p is specified.
 EXAMPLE
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0]
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -z 3 -o maps/cat -t
@@ -161,6 +164,8 @@ HISTORY
               help="transparent", metavar="TRANSPARENT", default=False)
   parser.add_option("-c", "--transparent-color", type="int", nargs=3, dest="transparent_color",
               help="transparent color", metavar="TRANSPARENT_COLOR", default=(0,0,0))
+  parser.add_option("-p", "--compose", action="store_true", dest="compose",
+              help="compose", metavar="COMPOSE", default=False)
   parser.add_option("-i", "--min-zoom-level", type="int", dest="min_zoom_level",
               help="minimum zoom level", metavar="MINIMUM_ZOOM_LEVEL", default=0)
   parser.add_option("-z", "--max-zoom-level", type="int", dest="max_zoom_level",
