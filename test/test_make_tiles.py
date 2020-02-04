@@ -29,16 +29,28 @@ def test_main():
 	sys.argv = ['make_tiles', 'tmp/cbk1i_7256_7274_warped.png', '[1688.26,1660.90,3961.74,-177.30]', '15119.55', '[-509.90,720.00]', '-z', '3', '-o', 'tmp/maps/47762', '-t', '-d']
 	main()
 
-def test_compose():
+def test_overlay():
 	# Hint
 	# > %prog data/cat.jpg data/billboad_for_rent.jpg [[40,264],[605,264],[605,540],[36,538]]
 	# > %prog data/cat.jpg data/billboad_for_rent.jpg [[55,675],[277,677],[281,826],[52,826]]''')	
-	shutil.copy(os.path.join(files_dir, 'cbk1i_7256_7274_warped.png'),'tmp')
-	sys.argv = ['make_tiles', 'tmp/cbk1i_7256_7274_warped.png', '[1688.26,1660.90,3961.74,-177.30]', '15119.55', '[-509.90,720.00]', '-z', '3', '-o', 'tmp/maps/layer/1', '-t', '-d', '--compose']
+	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1eyuyi9.png'),'tmp')
+	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1xuhbtd.png'),'tmp')
+
+	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1eyuyi9.png', '[-4616.77,3667.08,-3371.27,2712.06]', '10838.42', '[445.10,-1234.36]', '-z', '4', '-o', 'tmp/maps/layer/1', '-t', '-d', '--overlay', '--merge', '--merge-path', 'tmp/maps/layer/1/merged']
 	main()
-	sys.argv = ['make_tiles', 'tmp/cbk1i_7256_7274_warped.png', '[1688.26,1660.90,3961.74,-177.30]', '15119.55', '[1500,720.00]', '-z', '3', '-o', 'tmp/maps/layer/1', '-t', '-d', '--compose']
+	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1xuhbtd.png', '[-4649.02,2896.34,-3403.51,1941.32]', '10838.42', '[445.10,-1234.36]', '-z', '4', '-o', 'tmp/maps/layer/1', '-t', '-d', '--overlay', '--merge', '--merge-path', 'tmp/maps/layer/1/merged']
 	main()
-	sys.argv = ['make_tiles', 'tmp/cbk1i_7256_7274_warped.png', '[1688.26,1660.90,3961.74,-177.30]', '15119.55', '[-1500,-720.00]', '-z', '3', '-o', 'tmp/maps/layer/1', '-t', '-d', '--compose']
+
+def test_merge():
+	# Hint
+	# > %prog data/cat.jpg data/billboad_for_rent.jpg [[40,264],[605,264],[605,540],[36,538]]
+	# > %prog data/cat.jpg data/billboad_for_rent.jpg [[55,675],[277,677],[281,826],[52,826]]''')	
+	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1eyuyi9.png'),'tmp')
+	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1xuhbtd.png'),'tmp')
+
+	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1eyuyi9.png', '[-4616.77,3667.08,-3371.27,2712.06]', '10838.42', '[445.10,-1234.36]', '-a', '4', '-t', '-d', '--merge-path', 'tmp/maps/merged.png', '--merge', '--no-tile']
+	main()
+	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1xuhbtd.png', '[-4649.02,2896.34,-3403.51,1941.32]', '10838.42', '[445.10,-1234.36]', '-a', '4', '-t', '-d', '--merge-path', 'tmp/maps/merged.png', '--merge', '--no-tile']
 	main()
 
 def test_tile_ij_at():

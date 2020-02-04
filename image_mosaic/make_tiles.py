@@ -31,16 +31,14 @@ def tile_ij_at(zoom, x, y, length, center, tilesize = 256):
   return (i,j)
 
 def make_tiles(zoom, img, dirname, options):
-  dirname = os.path.join(dirname,str(zoom))
-  if not os.path.exists(dirname):
-    os.makedirs(dirname)
   
   ibox = options.ibox
   tilesize = options.tilesize
   length = options.length
   box = options.bbox
   n = 2**zoom
-  #print "zoom:%d (%d) tiles" % (zoom, n)
+  fpix = n * tilesize
+  
   #print ibox
   #print box
   pix = tilesize * n
@@ -55,12 +53,29 @@ def make_tiles(zoom, img, dirname, options):
   for i in range(min_i, max_i + 1):
     for j in range(min_j, max_j + 1):
       #tile_path = os.path.join(dirname,"%d-%d.png",i,j)
-      tile_path = os.path.join(dirname,"%d_%d.png" % (i,j))
-      if (os.path.exists(tile_path)) and options.compose:
-        tile = Image.open(tile_path)
-      else:
-        tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
-      
+      if (options.tile):
+        tdirname = os.path.join(dirname,str(zoom))
+        if not os.path.exists(tdirname):
+          os.makedirs(tdirname)
+        tile_path = os.path.join(tdirname,"%d_%d.png" % (i,j))
+        if (os.path.exists(tile_path)) and options.compose:
+          tile = Image.open(tile_path)
+        else:
+          tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
+      if options.merge:
+        merge_path = os.path.join(dirname,"%d.png" % zoom)
+        if options.merge_path:
+          merge_path = options.merge_path
+          base, ext = os.path.splitext(merge_path)
+          if (ext == ''):
+            if not os.path.exists(merge_path):
+              os.makedirs(merge_path)
+            merge_path = os.path.join(merge_path, "%d.png" % zoom)
+        if (os.path.exists(merge_path)):
+          merge = Image.open(merge_path)
+        else:
+          merge = Image.new('RGBA', (fpix, fpix), (0,0,0,0))
+
       pbox = (tilesize*i, tilesize*j, tilesize*(i+1), tilesize*(j+1))
       zleft = box[0] + dum*i
       zright = zleft + dum
@@ -92,6 +107,7 @@ def make_tiles(zoom, img, dirname, options):
         img_width, img_height = img.size
         roi_in_tile = (int(cb[0]*tilesize),int(cb[1]*tilesize),int(cb[2]*tilesize),int(cb[3]*tilesize))
         roi_in_image = (int(tb[0]*img_width),int(tb[1]*img_height),int(tb[2]*img_width),int(tb[3]*img_height))
+        roi_in_merge = (int(i*tilesize) + int(cb[0]*tilesize),int(j*tilesize) + int(cb[1]*tilesize),int(i*tilesize) + int(cb[2]*tilesize),int(j*tilesize) + int(cb[3]*tilesize))
         #print "crop", roi_in_image
         rsize = (roi_in_tile[2] - roi_in_tile[0], roi_in_tile[3] - roi_in_tile[1])
         #print "resize", rsize
@@ -99,14 +115,20 @@ def make_tiles(zoom, img, dirname, options):
         try:
           part = img.crop(roi_in_image)
           part = part.resize(rsize)
-          tile.paste(part, roi_in_tile)
+          if options.tile:
+            tile.paste(part, roi_in_tile, mask=part.split()[3])
+          if options.merge:
+            merge.paste(part, roi_in_merge, mask=part.split()[3])
         except:
           print("failed to generate %s" % tile_path)
         #print "tile", cbox, "world:", ppbox, roi_in_tile 
         #print "image", cbox, "img", ibox, roi_in_image
       #else:
         #print "roi is outside of the image"
-      tile.save(tile_path)
+      if options.tile:
+        tile.save(tile_path)
+      if options.merge:
+        merge.save(merge_path)
 
 def box_r(ibox, box):
   bx = box[0]
@@ -139,12 +161,21 @@ DESCRIPTION
   {zoom level}/{x}_{y}.png where x and y correspond to n-th coordinate of tile in horizontal
   and vertical direction. At zoom level 2, 16 tiles are exported as 2/0_0.png, 2/1_0.png,
   2/2_0.png, ..., and 2/3_3.png with resolution 1024/width (pixel/micron). 
-    This program replaces a color (default black) with transparent when the arguments -t is specified. The color is specified with the argument -c.
-    This program overlay a tile over the existing tile when the arguments -p is specified.
+
+  This program replaces a color (default black) with transparent when the arguments -t is specified. 
+  The color is specified with the argument -c. When the arguments --overlay is specified, This program 
+  overlay a tile over the existing tile.
+
+  This program merge tiles into an image when the arguments --merge is specified. The output path can
+  be specified with the argument --merged-path. With the argument --no-tile you will obtain only merged image.
+
 EXAMPLE
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0]
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -z 3 -o maps/cat -t
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -a 4 -o maps/cat -t -c 255 255 255
+  > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-290.0,-950.0] -a 4 -o maps/cat -t -c 255 255 255 --overlay
+  > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -a 4 -o maps/cat_merged.png -t -c 255 255 255 --merge --no-tile
+
 SEE ALSO
   https://github.com/misasa/image_mosaic
 
@@ -158,14 +189,20 @@ HISTORY
 ''')
 
   parser = OptionParser(usage)
+  parser.add_option("--no-tile", action="store_false", dest="tile",
+              help="without tile", metavar="WITHOUT_TILE", default=True)
   parser.add_option("-l", "--tilesize", type="int", dest="tilesize",
               help="tile size", metavar="TILESIZE", default=256)
   parser.add_option("-t", "--transparent", action="store_true", dest="transparent",
               help="transparent", metavar="TRANSPARENT", default=False)
   parser.add_option("-c", "--transparent-color", type="int", nargs=3, dest="transparent_color",
               help="transparent color", metavar="TRANSPARENT_COLOR", default=(0,0,0))
-  parser.add_option("-p", "--compose", action="store_true", dest="compose",
+  parser.add_option("-p","--compose", action="store_true", dest="compose",
               help="compose", metavar="COMPOSE", default=False)
+  parser.add_option("--overlay", action="store_true", dest="compose",
+              help="overlay", metavar="OVERLAY", default=False)
+  parser.add_option("-m", "--merge", action="store_true", dest="merge",
+              help="merge", metavar="MERGE", default=False)
   parser.add_option("-i", "--min-zoom-level", type="int", dest="min_zoom_level",
               help="minimum zoom level", metavar="MINIMUM_ZOOM_LEVEL", default=0)
   parser.add_option("-z", "--max-zoom-level", type="int", dest="max_zoom_level",
@@ -174,6 +211,8 @@ HISTORY
               help="zoom level", metavar="ZOOM_LVEL")
   parser.add_option("-o", "--output-dir", type="string", dest="output_dir",
               help="output directory", metavar="OUTPUT_DIR")
+  parser.add_option("--merge-path", type="string", dest="merge_path",
+              help="merged file path", metavar="MERGE_PATH")
   parser.add_option("-d", "--debug", action="store_true", dest="debug",  
               help="debug", metavar="DEBUG", default=False)
   (options, args) = parser.parse_args()
@@ -196,6 +235,11 @@ HISTORY
   dirname = "./"
   if options.output_dir != None:
     dirname = options.output_dir
+
+  if options.merge:
+    if options.merge_path != None:
+      dirname = os.path.dirname(options.merge_path)
+
   if not os.path.exists(dirname):
     os.makedirs(dirname)
 
