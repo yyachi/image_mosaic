@@ -18,15 +18,17 @@ SYNOPSIS AND USAGE
 
 DESCRIPTION
   Crop a rectangular region of an image.
+
 EXAMPLE
   > %prog --geometery 600x400+40+28 data/cat.jpg
 
 SEE ALSO
   https://github.com/misasa/image_mosaic
+  https://github.com/misasa/image_mosaic/blob/master/image_mosaic/crop_image.py
 
 IMPLEMENTATION
   Orochi, version 9
-  Copyright (C) 2014 Okayama University
+  Copyright (C) 2014-2020 Okayama University
   License GPLv3+: GNU GPL version 3 or later
 
 HISTORY
