@@ -41,10 +41,11 @@ SEE ALSO
   blend-image
   image-warp
   https://github.com/misasa/image_mosaic
+  https://github.com/misasa/image_mosaic/blob/master/image_mosaic/image_get_affine.py
 
 IMPLEMENTATION
   Orochi, version 9
-  Copyright (C) 2014 Okayama University
+  Copyright (C) 2014-2020 Okayama University
   License GPLv3+: GNU GPL version 3 or later
 
 HISTORY
