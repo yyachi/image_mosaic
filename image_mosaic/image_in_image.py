@@ -68,7 +68,7 @@ HISTORY
   if os.path.exists(image_path1) == False:
     parser.error("%s does not exist" % image_path1)
   else:     
-    img1 = cv2.imread(image_path1)
+    img1 = cv2.imread(image_path1, cv2.IMREAD_IGNORE_ORIENTATION | cv2.IMREAD_COLOR)
     img1_gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
     height1 = img1.shape[0]
     width1 = img1.shape[1]
@@ -77,7 +77,7 @@ HISTORY
   if os.path.exists(image_path2) == False:
     parser.error("%s does not exist" % image_path2)
   else:     
-    img2 = cv2.imread(image_path2)
+    img2 = cv2.imread(image_path2, cv2.IMREAD_IGNORE_ORIENTATION | cv2.IMREAD_COLOR)
     height2 = img2.shape[0]
     width2 = img2.shape[1]
 
