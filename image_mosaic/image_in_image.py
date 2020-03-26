@@ -40,6 +40,8 @@ HISTORY
   parser = OptionParser(usage)
   parser.add_option("-o", "--output-file", type="string", dest="output_path",
               help="output file", metavar="OUTPUT_FILE")
+  parser.add_option("-p", "--interpolation-method", type="choice", default ='linear', choices = ['linear', 'nearest'], dest="interpolation_method",
+              help="interpolation method: 'linear' or 'nearest' [default: %default]", metavar="INTERPOLATION_METHOD")
 
   (options, args) = parser.parse_args()
 
@@ -85,11 +87,21 @@ HISTORY
   dst = corner_points
   h = cv2.getPerspectiveTransform(src,dst)
 
-  img1_gray = cv2.warpPerspective(img1_gray, h, (width2, height2))
+  flags = cv2.INTER_LINEAR
+  if options.interpolation_method == 'nearest':
+    flags = cv2.INTER_NEAREST
+  elif options.interpolation_method == 'area':
+    flags = cv2.INTER_AREA
+  elif options.interpolation_method == 'cubic':
+    flags = cv2.INTER_CUBIC
+  elif options.interpolation_method == 'lanczos4':
+    flags = cv2.INTER_LANCZOS4
+
+  img1_gray = cv2.warpPerspective(img1_gray, h, (width2, height2), flags=flags)
   img1_gray = cv2.add(img1_gray, 1)
   (thresh, mask) = cv2.threshold(img1_gray, 1, 255, cv2.THRESH_BINARY_INV)
 
-  img3 = cv2.warpPerspective(img1, h, (width2, height2))
+  img3 = cv2.warpPerspective(img1, h, (width2, height2), flags=flags)
   cv2.add(img2, img3, img3, mask)
 
   cv2.imwrite(output_path, img3)
