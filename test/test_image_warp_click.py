@@ -1,12 +1,16 @@
 import os
 import shutil
 from nose.tools import *
+from nose.plugins.skip import SkipTest
 from mock import patch
 from mock import Mock
 from image_mosaic.image_warp_click import *
 
 files_dir = os.path.join(os.path.dirname(__file__), 'files')
 saved = None
+
+def setUpModule():
+  raise SkipTest
 
 def setup_tmp():
   if os.path.exists('tmp'):
