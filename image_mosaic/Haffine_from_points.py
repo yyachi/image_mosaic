@@ -61,7 +61,7 @@ HISTORY
   if options.output_format == 'text':
     print(array2str(h))
   elif options.output_format == 'yaml':
-    print(yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True))
+    print(yaml.dump(h.tolist(), encoding='utf8', allow_unicode=True).decode())
 
 if __name__ == '__main__':
   main()

@@ -77,7 +77,7 @@ HISTORY
   if options.output_format == 'text':
     print(array2str(dst))
   elif options.output_format == 'yaml':
-    print(yaml.dump(dst.tolist(), encoding='utf8', allow_unicode=True))
+    print(yaml.dump(dst.tolist(), encoding='utf8', allow_unicode=True).decode())
 
 if __name__ == '__main__':
   main()
