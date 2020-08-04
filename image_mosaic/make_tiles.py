@@ -6,6 +6,11 @@ import numpy
 from PIL import Image, ImageChops
 from optparse import OptionParser
 import math
+import ctypes
+import multiprocessing as mp
+from multiprocessing import Pool
+
+my_global = None
 
 def tile_ij_at(zoom, x, y, length, center, tilesize = 256):
   left = center[0] - length/2
@@ -129,6 +134,152 @@ def make_tiles(zoom, img, dirname, options):
         tile.save(tile_path)
       if options.merge:
         merge.save(merge_path)
+
+def make_params(zoom, img, dirname, options):
+
+  ibox = options.ibox
+  tilesize = options.tilesize
+  length = options.length
+  box = options.bbox
+  n = 2**zoom
+  fpix = n * tilesize
+  
+  pix = tilesize * n
+  length_per_pix = length/float(pix)
+  dum = length_per_pix*tilesize
+  #print length
+  #print pix
+  #print length_per_pix
+  #print dum
+  min_i, min_j = tile_ij_at(zoom, ibox[0], ibox[1], length, options.center)
+  max_i, max_j = tile_ij_at(zoom, ibox[2], ibox[3], length, options.center)
+  params = []
+  for i in range(min_i, max_i + 1):
+    for j in range(min_j, max_j + 1):
+      #param = {'img': img}
+      param = {}
+      #param['img'] = img
+      #tile_path = os.path.join(dirname,"%d-%d.png",i,j)
+      if (options.tile):
+        tdirname = os.path.join(dirname,str(zoom))
+        if not os.path.exists(tdirname):
+          os.makedirs(tdirname)
+        tile_path = os.path.join(tdirname,"%d_%d.png" % (i,j))
+        param['tile_path'] = tile_path
+        param['tilesize'] = tilesize
+#        if (os.path.exists(tile_path)) and options.compose:
+#          tile = Image.open(tile_path)
+#        else:
+#          tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
+      if options.merge:
+        merge_path = os.path.join(dirname,"%d.png" % zoom)
+        if options.merge_path:
+          merge_path = options.merge_path
+          base, ext = os.path.splitext(merge_path)
+          if (ext == ''):
+            if not os.path.exists(merge_path):
+              os.makedirs(merge_path)
+            merge_path = os.path.join(merge_path, "%d.png" % zoom)
+        param['merge_path'] = merge_path
+        param['mergesize'] = fpix
+#        if (os.path.exists(merge_path)):
+#          merge = Image.open(merge_path)
+#        else:
+#          merge = Image.new('RGBA', (fpix, fpix), (0,0,0,0))
+
+      pbox = (tilesize*i, tilesize*j, tilesize*(i+1), tilesize*(j+1))
+      zleft = box[0] + dum*i
+      zright = zleft + dum
+      zupper = box[1] - dum*j
+      zlower = zupper - dum
+      ppbox = (zleft, zupper, zright, zlower)
+      cbox = [0,0,0,0]
+      if (ibox[0] >= zleft and ibox[0] <= zright):
+        cbox[0] = ibox[0]
+      else:
+        cbox[0] = zleft
+      if (ibox[1] <= zupper and ibox[1] >= zlower):
+        cbox[1] = ibox[1]
+      else:
+        cbox[1] = zupper
+      if (ibox[2] >= zleft and ibox[2] <= zright):
+        cbox[2] = ibox[2]
+      else:
+        cbox[2] = zright
+      if (ibox[3] <= zupper and ibox[3] >= zlower):
+        cbox[3] = ibox[3]
+      else:
+        cbox[3] = zlower
+      cb = box_r(cbox,ppbox)
+      tb = box_r(cbox,ibox)
+      #print (i,j), "pixs:", pbox, "world:", ppbox
+      invalids = [r for r in tb if r < 0 or r > 1]
+      if len(invalids) == 0:
+        img_width, img_height = img.size
+        roi_in_tile = (int(cb[0]*tilesize),int(cb[1]*tilesize),int(cb[2]*tilesize),int(cb[3]*tilesize))
+        roi_in_image = (int(tb[0]*img_width),int(tb[1]*img_height),int(tb[2]*img_width),int(tb[3]*img_height))
+        roi_in_merge = (int(i*tilesize) + int(cb[0]*tilesize),int(j*tilesize) + int(cb[1]*tilesize),int(i*tilesize) + int(cb[2]*tilesize),int(j*tilesize) + int(cb[3]*tilesize))
+        #print "crop", roi_in_image
+        rsize = (roi_in_tile[2] - roi_in_tile[0], roi_in_tile[3] - roi_in_tile[1])
+        #print "resize", rsize
+        #print "paste", roi_in_tile
+        param['roi_in_src'] = roi_in_image
+        param['resize'] = rsize
+        try:
+ #         part = img.crop(roi_in_image)
+ #         part = part.resize(rsize)
+          if options.tile:
+            param['roi_in_tile'] = roi_in_tile
+ #           tile.paste(part, roi_in_tile, mask=part.split()[3])
+          if options.merge:
+            param['roi_in_merge'] = roi_in_merge
+ #           merge.paste(part, roi_in_merge, mask=part.split()[3])
+        except:
+          print("failed to generate %s" % tile_path)
+        #print "tile", cbox, "world:", ppbox, roi_in_tile 
+        #print "image", cbox, "img", ibox, roi_in_image
+      #else:
+      #  print("roi is outside of the image")
+#      if options.tile:
+#        tile.save(tile_path)
+#      if options.merge:
+#        merge.save(merge_path)
+      #make_tile(img, param)
+      params.append(param)
+
+  return params
+
+def make_tile(param):
+  global my_global
+  #print(my_global)
+  #img = param['img']
+  img = my_global  
+  roi_in_src = param['roi_in_src']
+  part = img.crop(roi_in_src)
+  rsize = param['resize']
+  part = part.resize(rsize)
+  if ('tile_path' in param):
+    tile_path = param['tile_path']
+    roi_in_tile = param['roi_in_tile']
+    if (os.path.exists(tile_path)):
+      tile = Image.open(tile_path)
+    else:
+      tilesize = param['tilesize']
+      tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
+    tile.paste(part, roi_in_tile, mask=part.split()[3])
+    tile.save(tile_path)
+  if ('merge_path' in param):
+    merge_path = param['merge_path']
+    roi_in_merge = param['roi_in_merge']
+    if (os.path.exists(merge_path)):
+      merge = Image.open(merge_path)
+    else:
+      mergesize = param['mergesize']
+      merge = Image.new('RGBA', (mergesize, mergesize), (0,0,0,0))
+    merge.paste(part, roi_in_merge, mask=part.split()[3])
+    merge.save(merge_path)
+    
+
 
 def box_r(ibox, box):
   bx = box[0]
@@ -262,12 +413,20 @@ HISTORY
     rgbtimg = Image.new("RGBA", img_org.size, (0,0,0,0))
     rgbtimg.paste(rgbimg, mask=mask_inv)
     image = rgbtimg
-
   if options.zoom_level:
-    make_tiles(options.zoom_level, image, dirname, options)
+    #make_tiles(options.zoom_level, image, dirname, options)
+    params = make_params(options.zoom_level, image, dirname, options)
   else:
+    params = []
     for zoom in range(options.min_zoom_level, (options.max_zoom_level + 1)):
-      make_tiles(zoom, image, dirname, options)
+      #make_tiles(zoom, image, dirname, options)
+      params.extend(make_params(zoom, image, dirname, options))
+    #for param in params:
+    #  param['v'] = v
+  global my_global
+  my_global = image  
+  p = Pool()
+  p.map(make_tile, params)
 
 if __name__ == '__main__':
   main()
