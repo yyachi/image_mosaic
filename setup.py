@@ -26,7 +26,7 @@ setup(name='image_mosaic',
             "PyYAML",
             "numpy",
             "Pillow",
-            "opencv-python",
+          #  "opencv-python",
           # -*- Extra requirements: -*-
       ],
       entry_points={
