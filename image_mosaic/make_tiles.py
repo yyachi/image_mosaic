@@ -276,10 +276,21 @@ HISTORY
       image = rgbtimg
 
     if options.zoom_level:
-      make_tiles(options.zoom_level, image, dirname, options)
+      #make_tiles(options.zoom_level, image, dirname, options)
+      params = make_params(options.zoom_level, image, dirname, options)
     else:
+      params = []
       for zoom in range(options.min_zoom_level, (options.max_zoom_level + 1)):
-        make_tiles(zoom, image, dirname, options)
+        #make_tiles(zoom, image, dirname, options)
+        params.extend(make_params(zoom, image, dirname, options))
+    global g_tilesize
+    g_tilesize = 256
+    global my_global
+    my_global = image  
+    #p = Pool(options.multi)
+    #p.map(make_tile, params)
+
+
 
 if __name__ == '__main__':
   main()
