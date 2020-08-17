@@ -8,6 +8,7 @@ from optparse import OptionParser
 import math
 import multiprocessing as mp
 from multiprocessing import Pool
+from memory_profiler import profile
 
 my_global = None
 
@@ -250,6 +251,10 @@ def make_params(zoom, img, dirname, options):
 
   return params
 
+def save_tile(path):
+  global my_dict
+  #print("saving %s" % path)
+  my_dict[path].save(path)
 
 def make_tile(param):
   global g_tilesize
@@ -264,19 +269,18 @@ def make_tile(param):
   except:
     print(param)
     return
-  #  print(roi_in_src)
-  #  print(rsize)
-  #  print(part)
-    #print(part)
   tile_path = param['tile_path']
   roi_in_tile = param['roi_in_tile']
-  if (os.path.exists(tile_path)):
+  if (tile_path in my_dict.keys()):
+    tile = my_dict[tile_path]
+  elif (os.path.exists(tile_path)):
     tile = Image.open(tile_path)
   else:
     tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
   tile.paste(part, roi_in_tile, mask=part.split()[3])
-  tile.save(tile_path)
+  #tile.save(tile_path)
   #cv2.imwrite(tile_path, numpy.array(tile))
+  return (tile_path, tile)
 
 def box_r(ibox, box):
   bx = box[0]
@@ -287,6 +291,7 @@ def box_r(ibox, box):
   l = [(ibox[0] - bx)/w, 1 - (ibox[1] - by)/h, (ibox[2] - bx)/w, 1 - (ibox[3] - by)/h]
   return l
 
+#@profile
 def main():
   usage = textwrap.dedent('''\
  %prog <image_path> <upper_and_bottom_edges|four_corners> [(<image_path> <upper_and_bottom_edges|four_corners>) ...] length center([x,y]) 
@@ -367,6 +372,8 @@ HISTORY
               help="merged file path", metavar="MERGE_PATH")
   parser.add_option("-d", "--debug", action="store_true", dest="debug",  
               help="debug", metavar="DEBUG", default=False)
+  parser.add_option("--multi", type="int", dest="multi",
+              help="multiprocessing", metavar="MULTIPROCESSING", default=8)
   (options, args) = parser.parse_args()
 
   if len(args) < 4:
@@ -398,6 +405,8 @@ HISTORY
   if not os.path.exists(dirname):
     os.makedirs(dirname)
 
+  global my_dict
+  my_dict = {}  
   for dic in images:
     print(dic)
     image_path = dic['path']
@@ -434,11 +443,16 @@ HISTORY
     global g_tilesize
     g_tilesize = 256
     global my_global
-    my_global = image  
+    my_global = image
     p = Pool(options.multi)
-    p.map(make_tile, params)
+    tiles = p.map(make_tile, params)
+    for tile in tiles:
+      if tile is not None:
+        my_dict[tile[0]] = tile[1]
 
-
-
+#  for path in my_dict.keys():
+#    my_dict[path].save(path)
+  p = Pool(options.multi)
+  p.map(save_tile, my_dict.keys())
 if __name__ == '__main__':
   main()
