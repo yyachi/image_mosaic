@@ -6,6 +6,10 @@ import numpy
 from PIL import Image, ImageChops
 from optparse import OptionParser
 import math
+import multiprocessing as mp
+from multiprocessing import Pool
+
+my_global = None
 
 def tile_ij_at(zoom, x, y, length, center, tilesize = 256):
   left = center[0] - length/2
