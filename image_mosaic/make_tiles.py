@@ -141,18 +141,20 @@ def box_r(ibox, box):
 
 def main():
   usage = textwrap.dedent('''\
- %prog image_path bounds([left,upper,right,bottom]) length center([x,y]) 
+ %prog <image_path> <upper_and_bottom_edges|four_corners> [(<image_path> <upper_and_bottom_edges|four_corners>) ...] length center([x,y]) 
 
 SYNOPSIS AND USAGE
-  %prog image_path bounds([left,upper,right,bottom]) length center([x,y]) 
+  %prog <image_path> <upper_and_bottom_edges|four_corners> [(<image_path> <upper_and_bottom_edges|four_corners>) ...] length center([x,y]) 
 
 DESCRIPTION
-  Project image to VS space and export squared sub-area of VS space as mosaic.
-  The mosaic consists of tiles of image with 256x256 pixels. Note that the edges
-  of the original image must be parallel to axis of VS space because this program
-  does not support projection with rotation. Location to project the original image
-  is set by x or y coordinate of four edges (x coordinate of left and right edges 
-  and y coordinate of upper and bottom edges). The squared sub-area on VS space is
+  Project images to VS space and export squared sub-area of VS space as mosaic.
+  The mosaic consists of tiles of image with 256x256 pixels. 
+   Locations to project the original images
+  are set by x or y coordinate of upper and bottom edges (x coordinate of left edge, 
+  y coordinate of upper edge, x coordinate of right edge, and y coordinate of bottom edges) 
+  or by x and y coordinate of 4 corners (x and y coordinates of left upper, right upper, 
+  right bottom, and left bottom corners). 
+  The squared sub-area on VS space is
   specified by center and width. The number of tiles depends on zoom levels. At zoom
   level 0 the squared sub-area is exported as a tile. Resolution of the tile is
   256/width (pixel/micron). With increment of zoom level the number of exporting tiles
@@ -171,6 +173,7 @@ DESCRIPTION
 
 EXAMPLE
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0]
+  > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] data/dog.jpg [-934.4,549.3,875.6,-737.9] 18100 [-294.0,-943.0]
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -z 3 -o maps/cat -t
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-294.0,-943.0] -a 4 -o maps/cat -t -c 255 255 255
   > %prog data/cat.jpg [-9344.0,5493.0,8756.0,-7379.0] 18100 [-290.0,-950.0] -a 4 -o maps/cat -t -c 255 255 255 --overlay
@@ -218,17 +221,20 @@ HISTORY
               help="debug", metavar="DEBUG", default=False)
   (options, args) = parser.parse_args()
 
-  if len(args) != 4:
+  if len(args) < 4:
     parser.error("incorrect number of arguments")
- 
-  image_path = args[0]
-  if os.path.exists(image_path) == False:
-    parser.error("%s does not exist" % image_path)
 
-  bounds = eval(args[1])
-  length = float(args[2])
-  center = eval(args[3])
-  options.ibox = bounds
+  center = eval(args.pop(-1))
+  length = float(args.pop(-1))
+
+  images = []
+  while len(args) > 0:
+    image_path = args.pop(0)
+    if os.path.exists(image_path) == False:
+      parser.error("%s does not exist" % image_path)
+    edge_or_corner = eval(args.pop(0))
+    images.append({'path': image_path, 'bounds': edge_or_corner})
+
   options.length = length
   options.center = center
   options.bbox = (center[0] - length/2,center[1] + length/2,center[0] + length/2,center[1] - length/2)
@@ -244,30 +250,36 @@ HISTORY
   if not os.path.exists(dirname):
     os.makedirs(dirname)
 
-  img_org = Image.open(image_path)
-  rgbimg = img_org.convert('RGB')
-  image = rgbimg
-  if options.debug:
-    print(options)
-  if options.transparent:
-    src_color = options.transparent_color
-    r,g,b = rgbimg.split()
-    _r = r.point(lambda _: 1 if _ == src_color[0] else 0, mode="1")
-    _g = g.point(lambda _: 1 if _ == src_color[1] else 0, mode="1")
-    _b = b.point(lambda _: 1 if _ == src_color[2] else 0, mode="1")
+  for dic in images:
+    print(dic)
+    image_path = dic['path']
+    bounds = dic['bounds']
+    options.ibox = bounds
+  
+    img_org = Image.open(image_path)
+    rgbimg = img_org.convert('RGB')
+    image = rgbimg
+    if options.debug:
+      print(options)
+    if options.transparent:
+      src_color = options.transparent_color
+      r,g,b = rgbimg.split()
+      _r = r.point(lambda _: 1 if _ == src_color[0] else 0, mode="1")
+      _g = g.point(lambda _: 1 if _ == src_color[1] else 0, mode="1")
+      _b = b.point(lambda _: 1 if _ == src_color[2] else 0, mode="1")
 
-    mask = ImageChops.logical_and(_r,_g)
-    mask = ImageChops.logical_and(mask, _b)
-    mask_inv = ImageChops.invert(mask)
-    rgbtimg = Image.new("RGBA", img_org.size, (0,0,0,0))
-    rgbtimg.paste(rgbimg, mask=mask_inv)
-    image = rgbtimg
+      mask = ImageChops.logical_and(_r,_g)
+      mask = ImageChops.logical_and(mask, _b)
+      mask_inv = ImageChops.invert(mask)
+      rgbtimg = Image.new("RGBA", img_org.size, (0,0,0,0))
+      rgbtimg.paste(rgbimg, mask=mask_inv)
+      image = rgbtimg
 
-  if options.zoom_level:
-    make_tiles(options.zoom_level, image, dirname, options)
-  else:
-    for zoom in range(options.min_zoom_level, (options.max_zoom_level + 1)):
-      make_tiles(zoom, image, dirname, options)
+    if options.zoom_level:
+      make_tiles(options.zoom_level, image, dirname, options)
+    else:
+      for zoom in range(options.min_zoom_level, (options.max_zoom_level + 1)):
+        make_tiles(zoom, image, dirname, options)
 
 if __name__ == '__main__':
   main()
