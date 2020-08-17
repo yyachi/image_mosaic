@@ -246,6 +246,34 @@ def make_params(zoom, img, dirname, options):
 
   return params
 
+
+def make_tile(param):
+  global g_tilesize
+  global my_global
+  img = my_global
+  tilesize = g_tilesize
+  roi_in_src = param['roi_in_src']
+  part = img.crop(roi_in_src)
+  rsize = param['resize']
+  try:
+    part = part.resize(rsize)
+  except:
+    print(param)
+    return
+  #  print(roi_in_src)
+  #  print(rsize)
+  #  print(part)
+    #print(part)
+  tile_path = param['tile_path']
+  roi_in_tile = param['roi_in_tile']
+  if (os.path.exists(tile_path)):
+    tile = Image.open(tile_path)
+  else:
+    tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
+  tile.paste(part, roi_in_tile, mask=part.split()[3])
+  tile.save(tile_path)
+  #cv2.imwrite(tile_path, numpy.array(tile))
+
 def box_r(ibox, box):
   bx = box[0]
   by = box[3]
@@ -403,8 +431,8 @@ HISTORY
     g_tilesize = 256
     global my_global
     my_global = image  
-    #p = Pool(options.multi)
-    #p.map(make_tile, params)
+    p = Pool(options.multi)
+    p.map(make_tile, params)
 
 
 
