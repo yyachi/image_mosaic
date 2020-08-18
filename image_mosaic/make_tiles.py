@@ -8,7 +8,7 @@ from optparse import OptionParser
 import math
 import multiprocessing as mp
 from multiprocessing import Pool
-from memory_profiler import profile
+import cv2
 
 my_global = None
 
@@ -171,21 +171,6 @@ def make_params(zoom, img, dirname, options):
 #          tile = Image.open(tile_path)
 #        else:
 #          tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
-      if options.merge:
-        merge_path = os.path.join(dirname,"%d.png" % zoom)
-        if options.merge_path:
-          merge_path = options.merge_path
-          base, ext = os.path.splitext(merge_path)
-          if (ext == ''):
-            if not os.path.exists(merge_path):
-              os.makedirs(merge_path)
-            merge_path = os.path.join(merge_path, "%d.png" % zoom)
-        param['merge_path'] = merge_path
-        param['mergesize'] = fpix
-#        if (os.path.exists(merge_path)):
-#          merge = Image.open(merge_path)
-#        else:
-#          merge = Image.new('RGBA', (fpix, fpix), (0,0,0,0))
 
       pbox = (tilesize*i, tilesize*j, tilesize*(i+1), tilesize*(j+1))
       zleft = box[0] + dum*i
@@ -226,27 +211,12 @@ def make_params(zoom, img, dirname, options):
         param['roi_in_src'] = roi_in_image
         param['resize'] = rsize
         try:
- #         part = img.crop(roi_in_image)
- #         part = part.resize(rsize)
           if options.tile:
             param['roi_in_tile'] = roi_in_tile
- #           tile.paste(part, roi_in_tile, mask=part.split()[3])
-          if options.merge:
-            param['roi_in_merge'] = roi_in_merge
- #           merge.paste(part, roi_in_merge, mask=part.split()[3])
         except:
           print("failed to generate %s" % tile_path)
-        #print "tile", cbox, "world:", ppbox, roi_in_tile 
-        #print "image", cbox, "img", ibox, roi_in_image
       else:
         print("roi is outside of the image")
-#        print(param)
-#        continue
-#      if options.tile:
-#        tile.save(tile_path)
-#      if options.merge:
-#        merge.save(merge_path)
-      #make_tile(img, param)
       params.append(param)
 
   return params
@@ -279,8 +249,8 @@ def make_tile(param):
     tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
   tile.paste(part, roi_in_tile, mask=part.split()[3])
   #tile.save(tile_path)
-  #cv2.imwrite(tile_path, numpy.array(tile))
-  return (tile_path, tile)
+  cv2.imwrite(tile_path, numpy.array(tile))
+  #return (tile_path, tile)
 
 def box_r(ibox, box):
   bx = box[0]
@@ -290,6 +260,64 @@ def box_r(ibox, box):
  
   l = [(ibox[0] - bx)/w, 1 - (ibox[1] - by)/h, (ibox[2] - bx)/w, 1 - (ibox[3] - by)/h]
   return l
+
+def distance(p1, p2):
+  return math.sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2)
+
+def warp(dic, options):
+  edges = dic['edges']
+  lu = edges[0]
+  ru = edges[1]
+  rb = edges[2]
+  xs = [edge[0] for edge in edges]
+  ys = [edge[1] for edge in edges]
+  left = min(xs)
+  right = max(xs)
+  upper = max(ys)
+  bottom = min(ys)
+  bounds = [left, upper, right, bottom]
+  dic['bounds'] = bounds
+  w_um = distance(lu, ru)
+  h_um = distance(ru, rb)
+  img1 = cv2.imread(dic['path'], cv2.IMREAD_IGNORE_ORIENTATION | cv2.IMREAD_COLOR)
+  height1 = img1.shape[0]
+  width1 = img1.shape[1]
+
+  p_um = width1/w_um
+  b_w = right - left
+  b_h = upper - bottom
+  new_geometry = [math.ceil(b_w * p_um), math.ceil(b_h * p_um)]
+  corners_on_new_image = []
+  for corner in edges:
+    dx = corner[0] - left
+    dy = upper - corner[1]
+    pixs = [int(dx/b_w*new_geometry[0]), int(dy/b_h*new_geometry[1])]
+    corners_on_new_image.append(pixs)
+  width2 = new_geometry[0]
+  height2 = new_geometry[1]
+  img2 = numpy.zeros((height2, width2, 3), numpy.uint8)
+  src = numpy.array([[0,0],[width1,0],[width1,height1],[0,height1]], dtype = numpy.float32)
+  dst = numpy.array(corners_on_new_image, dtype=numpy.float32)
+  h = cv2.getPerspectiveTransform(src,dst)
+  flags = cv2.INTER_LINEAR
+  if options.interpolation_method == 'nearest':
+    flags = cv2.INTER_NEAREST
+  elif options.interpolation_method == 'area':
+    flags = cv2.INTER_AREA
+  elif options.interpolation_method == 'cubic':
+    flags = cv2.INTER_CUBIC
+  elif options.interpolation_method == 'lanczos4':
+    flags = cv2.INTER_LANCZOS4
+
+  img1_gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+  img1_gray = cv2.warpPerspective(img1_gray, h, (width2, height2), flags=flags)
+  img1_gray = cv2.add(img1_gray, 1)
+  (thresh, mask) = cv2.threshold(img1_gray, 1, 255, cv2.THRESH_BINARY_INV)
+
+  img3 = cv2.warpPerspective(img1, h, (width2, height2), flags=flags)
+  cv2.add(img2, img3, img3, mask)
+  #cv2.imwrite(output_path, img3)
+  return Image.fromarray(img3)
 
 #@profile
 def main():
@@ -358,8 +386,10 @@ HISTORY
               help="compose", metavar="COMPOSE", default=False)
   parser.add_option("--overlay", action="store_true", dest="compose",
               help="overlay", metavar="OVERLAY", default=False)
-  parser.add_option("-m", "--merge", action="store_true", dest="merge",
-              help="merge", metavar="MERGE", default=False)
+  parser.add_option("--interpolation-method", type="choice", default ='linear', choices = ['linear', 'nearest'], dest="interpolation_method",
+              help="interpolation method: 'linear' or 'nearest' [default: %default]", metavar="INTERPOLATION_METHOD")
+#  parser.add_option("-m", "--merge", action="store_true", dest="merge",
+#              help="merge", metavar="MERGE", default=False)
   parser.add_option("-i", "--min-zoom-level", type="int", dest="min_zoom_level",
               help="minimum zoom level", metavar="MINIMUM_ZOOM_LEVEL", default=0)
   parser.add_option("-z", "--max-zoom-level", type="int", dest="max_zoom_level",
@@ -368,8 +398,8 @@ HISTORY
               help="zoom level", metavar="ZOOM_LVEL")
   parser.add_option("-o", "--output-dir", type="string", dest="output_dir",
               help="output directory", metavar="OUTPUT_DIR")
-  parser.add_option("--merge-path", type="string", dest="merge_path",
-              help="merged file path", metavar="MERGE_PATH")
+#  parser.add_option("--merge-path", type="string", dest="merge_path",
+#              help="merged file path", metavar="MERGE_PATH")
   parser.add_option("-d", "--debug", action="store_true", dest="debug",  
               help="debug", metavar="DEBUG", default=False)
   parser.add_option("--multi", type="int", dest="multi",
@@ -388,7 +418,10 @@ HISTORY
     if os.path.exists(image_path) == False:
       parser.error("%s does not exist" % image_path)
     edge_or_corner = eval(args.pop(0))
-    images.append({'path': image_path, 'bounds': edge_or_corner})
+    if (type(edge_or_corner[0]) is list):
+      images.append({'path': image_path, 'edges': edge_or_corner})
+    else:
+      images.append({'path': image_path, 'bounds': edge_or_corner})
 
   options.length = length
   options.center = center
@@ -398,22 +431,17 @@ HISTORY
   if options.output_dir != None:
     dirname = options.output_dir
 
-  if options.merge:
-    if options.merge_path != None:
-      dirname = os.path.dirname(options.merge_path)
-
   if not os.path.exists(dirname):
     os.makedirs(dirname)
 
   global my_dict
   my_dict = {}  
   for dic in images:
-    print(dic)
-    image_path = dic['path']
-    bounds = dic['bounds']
-    options.ibox = bounds
-  
-    img_org = Image.open(image_path)
+    if ('edges' in dic.keys()):
+      img_org = warp(dic, options)
+    else:
+      img_org = Image.open(dic['path'])
+
     rgbimg = img_org.convert('RGB')
     image = rgbimg
     if options.debug:
@@ -432,6 +460,8 @@ HISTORY
       rgbtimg.paste(rgbimg, mask=mask_inv)
       image = rgbtimg
 
+    bounds = dic['bounds']
+    options.ibox = bounds
     if options.zoom_level:
       #make_tiles(options.zoom_level, image, dirname, options)
       params = make_params(options.zoom_level, image, dirname, options)

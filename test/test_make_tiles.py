@@ -36,21 +36,17 @@ def test_overlay():
 	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1eyuyi9.png'),'tmp')
 	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1xuhbtd.png'),'tmp')
 
-	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1eyuyi9.png', '[-4616.77,3667.08,-3371.27,2712.06]', '10838.42', '[445.10,-1234.36]', '-z', '4', '-o', 'tmp/maps/layer/1', '-t', '-d', '--overlay', '--merge', '--merge-path', 'tmp/maps/layer/1/merged']
+	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1eyuyi9.png', '[-4616.77,3667.08,-3371.27,2712.06]', '10838.42', '[445.10,-1234.36]', '-z', '4', '-o', 'tmp/maps/layer/1', '-t', '-d', '--overlay']
 	main()
-	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1xuhbtd.png', '[-4649.02,2896.34,-3403.51,1941.32]', '10838.42', '[445.10,-1234.36]', '-z', '4', '-o', 'tmp/maps/layer/1', '-t', '-d', '--overlay', '--merge', '--merge-path', 'tmp/maps/layer/1/merged']
+	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1xuhbtd.png', '[-4649.02,2896.34,-3403.51,1941.32]', '10838.42', '[445.10,-1234.36]', '-z', '4', '-o', 'tmp/maps/layer/1', '-t', '-d', '--overlay']
 	main()
 
-def test_merge():
+def test_warp_and_tiles():
 	# Hint
 	# > %prog data/cat.jpg data/billboad_for_rent.jpg [[40,264],[605,264],[605,540],[36,538]]
 	# > %prog data/cat.jpg data/billboad_for_rent.jpg [[55,675],[277,677],[281,826],[52,826]]''')	
-	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1eyuyi9.png'),'tmp')
-	shutil.copy(os.path.join(files_dir, 'warped-20200203-15840-1xuhbtd.png'),'tmp')
-
-	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1eyuyi9.png', '[-4616.77,3667.08,-3371.27,2712.06]', '10838.42', '[445.10,-1234.36]', '-a', '4', '-t', '-d', '--merge-path', 'tmp/maps/merged.png', '--merge', '--no-tile']
-	main()
-	sys.argv = ['make_tiles', 'tmp/warped-20200203-15840-1xuhbtd.png', '[-4649.02,2896.34,-3403.51,1941.32]', '10838.42', '[445.10,-1234.36]', '-a', '4', '-t', '-d', '--merge-path', 'tmp/maps/merged.png', '--merge', '--no-tile']
+	shutil.copy(os.path.join(files_dir, '20200310-2153.jpg'),'tmp')
+	sys.argv = ['make_tiles', 'test/files/20200310-2153.jpg', '[[-2654.38,4051.39],[3796.68,3989.17],[3833.71,-5321.02],[-2617.36,-5258.79]]', '12381.30', '[-80.39,-836.11]', '-o', 'tmp/maps/20200311132716-107216/59456', '-z', '4', '-t']
 	main()
 
 def test_tile_ij_at():
