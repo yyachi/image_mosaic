@@ -403,7 +403,7 @@ HISTORY
   parser.add_option("-d", "--debug", action="store_true", dest="debug",  
               help="debug", metavar="DEBUG", default=False)
   parser.add_option("--multi", type="int", dest="multi",
-              help="multiprocessing", metavar="MULTIPROCESSING", default=8)
+              help="multiprocessing (default: %default)", metavar="MULTIPROCESSING", default=os.cpu_count())
   (options, args) = parser.parse_args()
 
   if len(args) < 4:
