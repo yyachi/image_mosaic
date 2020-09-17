@@ -249,7 +249,8 @@ def make_tile(param):
     tile = Image.new('RGBA', (tilesize, tilesize), (0,0,0,0))
   tile.paste(part, roi_in_tile, mask=part.split()[3])
   #tile.save(tile_path)
-  cv2.imwrite(tile_path, numpy.array(tile))
+  oimg_bgr = cv2.cvtColor(numpy.array(tile), cv2.COLOR_RGB2BGR)
+  cv2.imwrite(tile_path, oimg_bgr)
   #return (tile_path, tile)
 
 def box_r(ibox, box):
@@ -317,7 +318,7 @@ def warp(dic, options):
   img3 = cv2.warpPerspective(img1, h, (width2, height2), flags=flags)
   cv2.add(img2, img3, img3, mask)
   #cv2.imwrite(output_path, img3)
-  return Image.fromarray(img3)
+  return Image.fromarray(cv2.cvtColor(img3, cv2.COLOR_BGR2RGB))
 
 #@profile
 def main():
