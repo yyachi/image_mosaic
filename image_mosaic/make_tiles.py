@@ -480,10 +480,12 @@ HISTORY
     for tile in tiles:
       if tile is not None:
         my_dict[tile[0]] = tile[1]
-
+    p.close()
 #  for path in my_dict.keys():
 #    my_dict[path].save(path)
   p = Pool(options.multi)
   p.map(save_tile, my_dict.keys())
+  p.close()
+  
 if __name__ == '__main__':
   main()
